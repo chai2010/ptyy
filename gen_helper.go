@@ -4,6 +4,11 @@
 
 // +build ingore
 
+//
+// 数据来源:
+//	https://github.com/langhua9527/BlackheartedHospital
+//
+
 package main
 
 import (
