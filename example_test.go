@@ -25,7 +25,7 @@ func ExampleSearch_wuhan() {
 	// 湖北荣军医院 (武汉)
 }
 
-func ExampleSearch_wuhan_mimit3() {
+func ExampleSearch_wuhanLimit3() {
 	for _, v := range ptyy.Search("武汉", 3) {
 		fmt.Printf("%s (%s)\n", v.Name, v.City)
 	}
