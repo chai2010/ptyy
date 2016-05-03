@@ -8,6 +8,9 @@ import (
 	"testing"
 )
 
-func TestFoo(t *testing.T) {
-	// TODO
+func TestSearch_onlyOne(t *testing.T) {
+	infoList := Search("454", 0)
+	tAssert(t, len(infoList) == 1, infoList)
+	tAssert(t, infoList[0].Name, "454医院植发科")
+	tAssert(t, infoList[0].City, "南京")
 }
