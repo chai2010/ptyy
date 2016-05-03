@@ -2,14 +2,12 @@
 
 [![GoDoc](https://godoc.org/github.com/chai2010/ptyy?status.svg)](https://godoc.org/github.com/chai2010/ptyy)
 
-Install
-=======
+## 安装包
 
 1. `go get github.com/chai2010/ptyy`
 2. `go run hello.go`
 
-Example
-=======
+## 示例代码
 
 ```Go
 package main
@@ -43,8 +41,20 @@ func main() {
 }
 ```
 
-BUGS
-====
+运行程序:
+
+```
+go run hello.go -limits=0 武汉
+武汉华仁医院 (武汉)
+武汉华夏医院 (武汉)
+武汉华美医院 (武汉)
+武汉当代佳丽医院 (武汉)
+武汉现代女子妇科医院 (武汉)
+武汉阳光女子医院 (武汉)
+湖北荣军医院 (武汉)
+```
+
+## BUGS
 
 Report bugs to <chaishushan@gmail.com>.
 
