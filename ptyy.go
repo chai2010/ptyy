@@ -7,10 +7,13 @@
 package ptyy
 
 import (
+	"fmt"
 	"regexp"
 	"sort"
 	"strings"
 )
+
+var _ = fmt.Sprintf
 
 // 医院信息
 type HospitalInfo struct {
@@ -57,21 +60,21 @@ func searchByKeywords(key string, limits int) (results []HospitalInfo) {
 	result1Map := make(map[string]HospitalInfo)
 
 	for _, v := range All {
+		if limits > 0 && len(result0Map)+len(result1Map) >= limits {
+			break
+		}
 		if strings.HasPrefix(v.Name, key) || strings.HasPrefix(v.City, key) {
 			result0Map[v.Name] = v
 		}
-		if limits <= 0 || len(result0Map)+len(result1Map) >= limits {
-			break
-		}
 	}
 	for _, v := range All {
+		if limits > 0 && len(result0Map)+len(result1Map) >= limits {
+			break
+		}
 		if strings.Contains(v.Name, key) || strings.Contains(v.City, key) {
 			if _, ok := result0Map[v.Name]; !ok {
 				result1Map[v.Name] = v
 			}
-		}
-		if limits <= 0 || len(result0Map)+len(result1Map) >= limits {
-			break
 		}
 	}
 
@@ -86,10 +89,11 @@ func searchByKeywords(key string, limits int) (results []HospitalInfo) {
 	}
 
 	sort.Sort(byHospitalInfo(result0List))
-	sort.Sort(byHospitalInfo(result0List))
+	sort.Sort(byHospitalInfo(result1List))
 
 	results = append(results, result0List...)
 	results = append(results, result1List...)
+
 	return
 }
 

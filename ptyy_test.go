@@ -9,8 +9,8 @@ import (
 )
 
 func TestSearch_onlyOne(t *testing.T) {
-	infoList := Search("454", 0)
+	infoList := Search("万州阳光眼科", 0)
 	tAssert(t, len(infoList) == 1, infoList)
-	tAssert(t, infoList[0].Name, "454医院植发科")
-	tAssert(t, infoList[0].City, "南京")
+	tAssertEQ(t, infoList[0].Name, "万州阳光眼科医院")
+	tAssertEQ(t, infoList[0].City, "重庆")
 }
