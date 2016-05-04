@@ -6,6 +6,7 @@ package ptyy_test
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/chai2010/ptyy"
 )
@@ -34,4 +35,23 @@ func ExampleSearch_wuhanLimit3() {
 	// 武汉华仁医院 (武汉)
 	// 武汉华夏医院 (武汉)
 	// 武汉华美医院 (武汉)
+}
+
+func ExampleSearchByRegexp() {
+	results, err := ptyy.SearchByRegexp("上海.*[男女]子", 0)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, v := range results {
+		fmt.Printf("%s (%s)\n", v.Name, v.City)
+	}
+
+	// Output:
+	// 上海九龙男子医院 (上海)
+	// 上海城市女子医院 (上海)
+	// 上海玛丽女子医院 (上海)
+	// 上海玫瑰女子医院 (上海)
+	// 上海真爱女子医院 (上海)
+	// 上海阿波罗男子医院 (上海)
 }
