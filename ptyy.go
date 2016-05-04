@@ -54,6 +54,54 @@ func Search(query string, limits int) []HospitalInfo {
 }
 
 // 根据关键字查询
+func SearchByKeywords(keywords string, limits int) []HospitalInfo {
+	// 规范化: 删除前后空白
+	keywords = strings.TrimSpace(keywords)
+
+	// 如果为空的话, 返回全部
+	if keywords == "" {
+		if limits <= 0 || limits > len(All) {
+			return All
+		}
+		return All[:limits]
+	}
+
+	// 根据关键字查询
+	if results := searchByKeywords(keywords, limits); len(results) > 0 {
+		return results
+	}
+
+	// 没有匹配
+	return nil
+}
+
+// 根据关键字查询
+func SearchByRegexp(query string, limits int) ([]HospitalInfo, error) {
+	// 规范化: 删除前后空白
+	query = strings.TrimSpace(query)
+
+	// 如果为空的话, 返回全部
+	if query == "" || query == ".*" {
+		if limits <= 0 || limits > len(All) {
+			return All, nil
+		}
+		return All[:limits], nil
+	}
+
+	// 如果没有匹配的, 则尝试正则查询
+	re, err := regexp.Compile(query)
+	if err != nil {
+		return nil, err
+	}
+	if results := searchByRegexp(re, limits); len(results) > 0 {
+		return results, nil
+	}
+
+	// 没有匹配
+	return nil, nil
+}
+
+// 根据关键字查询
 // TODO: 以后可扩展为多个关键字, 采用非字符字符分隔
 func searchByKeywords(key string, limits int) (results []HospitalInfo) {
 	result0Map := make(map[string]HospitalInfo)
@@ -102,11 +150,11 @@ func searchByRegexp(re *regexp.Regexp, limits int) []HospitalInfo {
 	resultMap := make(map[string]HospitalInfo)
 
 	for _, v := range All {
+		if limits > 0 && len(resultMap) >= limits {
+			break
+		}
 		if re.MatchString(v.Name) || re.MatchString(v.City) {
 			resultMap[v.Name] = v
-		}
-		if limits <= 0 || len(resultMap) >= limits {
-			break
 		}
 	}
 

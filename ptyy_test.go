@@ -14,3 +14,13 @@ func TestSearch_onlyOne(t *testing.T) {
 	tAssertEQ(t, infoList[0].Name, "万州阳光眼科医院")
 	tAssertEQ(t, infoList[0].City, "重庆")
 }
+
+func TestSearchByRegexp(t *testing.T) {
+	infoList, err := SearchByRegexp("^454", 0)
+	tAssertNil(t, err)
+	tAssert(t, len(infoList) == 1, infoList)
+
+	infoList, err = SearchByRegexp("上海.*[男女]子", 0)
+	tAssertNil(t, err)
+	tAssert(t, len(infoList) > 1, infoList)
+}
