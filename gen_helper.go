@@ -23,8 +23,9 @@ import (
 )
 
 func main() {
-	genListFile("z_list.go", parseInfoList())
-	genPinyinFile("z_pinyin.go", parsePinyinFile())
+	infoList := parseInfoList()
+	genListFile("z_list.go", infoList)
+	genPinyinFile("z_pinyin.go", infoList, parsePinyinFile())
 }
 
 type HospitalInfo struct {
@@ -71,7 +72,18 @@ package ptyy
 }
 
 // 生成拼音表格
-func genPinyinFile(filename string, pyMap map[rune][]string) {
+func genPinyinFile(filename string, infoList []HospitalInfo, pyMap map[rune][]string) {
+	// 统计出现的汉字列表
+	var usedRuneMap = make(map[rune]bool)
+	for _, info := range infoList {
+		for _, r := range info.Name {
+			usedRuneMap[r] = true
+		}
+		for _, r := range info.City {
+			usedRuneMap[r] = true
+		}
+	}
+
 	var buf bytes.Buffer
 
 	fmt.Fprintln(&buf, `
@@ -84,18 +96,25 @@ func genPinyinFile(filename string, pyMap map[rune][]string) {
 package ptyy
 `[1:])
 
-	fmt.Fprintln(&buf, `var _RunePinyinTable = map[rune][]string{`)
+	fmt.Fprintln(&buf, `var _RunePinyinTable = map[rune]string{`)
 	for r, pyList := range pyMap {
-		fmt.Fprintf(&buf, "'%s': []string{", string(r))
-		for i, py := range pyList {
-			if i < len(pyList)-1 {
-				fmt.Fprintf(&buf, "%q,", py)
-			} else {
-				fmt.Fprintf(&buf, "%q", py)
-			}
+		// 只输出用到的汉字
+		if !usedRuneMap[r] {
+			continue
 		}
-		fmt.Fprintf(&buf, "},\n")
 
+		// 多音字读音选择补丁
+		if pyPatch := g_pinyinPatch[r]; pyPatch != "" {
+			pyList = []string{pyPatch}
+		}
+
+		// 多音字需要手工处理
+		if len(pyList) > 1 {
+			fmt.Printf("多音字: '%s': %q\n", string(r), pyList)
+			continue
+		}
+
+		fmt.Fprintf(&buf, "'%s': %q,\n", string(r), pyList[0])
 	}
 	fmt.Fprintln(&buf, "}")
 
@@ -278,6 +297,26 @@ func isHospitalName(name string) bool {
 		}
 	}
 	return false
+}
+
+// 汉字读音字补丁(回避多音字问题)
+var g_pinyinPatch = map[rune]string{
+	'乐': "le4",
+	'拉': "la1",
+	'重': "chong2",
+	'漯': "luo4",
+	'寿': "shou4",
+	'创': "chuang4",
+	'沙': "sha1",
+	'玛': "ma3",
+	'脉': "mai4",
+	'朝': "chao2",
+	'宿': "su4",
+	'咽': "yan1",
+	'番': "pan1",
+	'都': "du1",
+	'厦': "xia4",
+	'结': "jie2",
 }
 
 // 忽略行的关键字
