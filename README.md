@@ -79,8 +79,14 @@ go run hello.go wuhan
 湖北荣军医院 (武汉)
 ```
 
-## BUGS
+## 应用案例截图
 
-Report bugs to <chaishushan@gmail.com>.
+iOS版本的“野鸡医院”(开发截图), 底层使用了 `ptyy` 作为底层查询引擎:
 
-Thanks!
+![](./screenshots/yjyy-ios.png)
+
+## 报告问题
+
+请联系 <chaishushan@gmail.com>.
+
+谢谢!
