@@ -114,12 +114,28 @@ func searchByKeywords(key string, limits int) (results []HospitalInfo) {
 		if strings.HasPrefix(v.Name, key) || strings.HasPrefix(v.City, key) {
 			result0Map[v.Name] = v
 		}
+		if strings.HasPrefix(_NamePinyinLongMap[v.Name], key) || strings.HasPrefix(_NamePinyinShortMap[v.Name], key) {
+			result0Map[v.Name] = v
+		}
+		if strings.HasPrefix(_NamePinyinLongMap[v.City], key) || strings.HasPrefix(_NamePinyinShortMap[v.City], key) {
+			result0Map[v.Name] = v
+		}
 	}
 	for _, v := range All {
 		if limits > 0 && len(result0Map)+len(result1Map) >= limits {
 			break
 		}
 		if strings.Contains(v.Name, key) || strings.Contains(v.City, key) {
+			if _, ok := result0Map[v.Name]; !ok {
+				result1Map[v.Name] = v
+			}
+		}
+		if strings.Contains(_NamePinyinLongMap[v.Name], key) || strings.Contains(_NamePinyinShortMap[v.Name], key) {
+			if _, ok := result0Map[v.Name]; !ok {
+				result1Map[v.Name] = v
+			}
+		}
+		if strings.Contains(_NamePinyinLongMap[v.City], key) || strings.Contains(_NamePinyinShortMap[v.City], key) {
 			if _, ok := result0Map[v.Name]; !ok {
 				result1Map[v.Name] = v
 			}
@@ -154,6 +170,12 @@ func searchByRegexp(re *regexp.Regexp, limits int) []HospitalInfo {
 			break
 		}
 		if re.MatchString(v.Name) || re.MatchString(v.City) {
+			resultMap[v.Name] = v
+		}
+		if re.MatchString(_NamePinyinLongMap[v.Name]) || re.MatchString(_NamePinyinShortMap[v.Name]) {
+			resultMap[v.Name] = v
+		}
+		if re.MatchString(_NamePinyinLongMap[v.City]) || re.MatchString(_NamePinyinShortMap[v.City]) {
 			resultMap[v.Name] = v
 		}
 	}
