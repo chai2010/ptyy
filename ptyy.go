@@ -28,6 +28,7 @@ var All []HospitalInfo = _AllHospitalInfoList
 func Search(query string, limits int) []HospitalInfo {
 	// 规范化: 删除前后空白
 	query = strings.TrimSpace(query)
+	query = strings.ToLower(query)
 
 	// 如果为空的话, 返回全部
 	if query == "" {
@@ -57,6 +58,7 @@ func Search(query string, limits int) []HospitalInfo {
 func SearchByKeywords(keywords string, limits int) []HospitalInfo {
 	// 规范化: 删除前后空白
 	keywords = strings.TrimSpace(keywords)
+	keywords = strings.ToLower(keywords)
 
 	// 如果为空的话, 返回全部
 	if keywords == "" {
