@@ -11,6 +11,7 @@ import (
 	"regexp"
 	"sort"
 	"strings"
+	"unicode/utf8"
 )
 
 var _ = fmt.Sprintf
@@ -38,13 +39,17 @@ func Search(query string, limits int) []HospitalInfo {
 		return All[:limits]
 	}
 
+	if !utf8.ValidString(query) {
+		return nil
+	}
+
 	// 根据关键字查询
 	if results := searchByKeywords(query, limits); len(results) > 0 {
 		return results
 	}
 
 	// 如果没有匹配的, 则尝试正则查询
-	if re, err := regexp.Compile(query); err == nil {
+	if re, err := regexp.Compile(goodRegexpString(query)); err == nil {
 		if results := searchByRegexp(re, limits); len(results) > 0 {
 			return results
 		}
@@ -56,6 +61,10 @@ func Search(query string, limits int) []HospitalInfo {
 
 // 根据关键字查询
 func SearchByKeywords(keywords string, limits int) []HospitalInfo {
+	if !utf8.ValidString(keywords) {
+		return nil
+	}
+
 	// 规范化: 删除前后空白
 	keywords = strings.TrimSpace(keywords)
 	keywords = strings.ToLower(keywords)
@@ -79,6 +88,10 @@ func SearchByKeywords(keywords string, limits int) []HospitalInfo {
 
 // 根据关键字查询
 func SearchByRegexp(query string, limits int) ([]HospitalInfo, error) {
+	if !utf8.ValidString(query) {
+		return nil, fmt.Errorf("ptzz: bad query: %q", query)
+	}
+
 	// 规范化: 删除前后空白
 	query = strings.TrimSpace(query)
 
@@ -91,7 +104,7 @@ func SearchByRegexp(query string, limits int) ([]HospitalInfo, error) {
 	}
 
 	// 如果没有匹配的, 则尝试正则查询
-	re, err := regexp.Compile(query)
+	re, err := regexp.Compile(goodRegexpString(query))
 	if err != nil {
 		return nil, err
 	}
@@ -188,6 +201,40 @@ func searchByRegexp(re *regexp.Regexp, limits int) []HospitalInfo {
 	}
 	sort.Sort(byHospitalInfo(resultList))
 	return resultList
+}
+
+// 规范化正则
+func goodRegexpString(re string) string {
+	mapRune := [][2]rune{
+		{'，', ','},
+		{'。', '.'},
+		{'：', ':'},
+		{'－', '-'},
+		{'＋', '+'},
+		{'＊', '*'},
+		{'？', '?'},
+		{'^', '^'},
+		{'¥', '$'},
+		{'、', '\\'},
+		{'｜', '|'},
+		{'［', '['},
+		{'］', ']'},
+		{'｛', '{'},
+		{'｝', '}'},
+		{'（', '('},
+		{'）', ')'},
+		{'《', '<'},
+		{'》', '>'},
+	}
+	runes := []rune(re)
+	for i := 0; i < len(runes); i++ {
+		for j := 0; j < len(mapRune); j++ {
+			if runes[i] == mapRune[j][0] {
+				runes[i] = mapRune[j][1]
+			}
+		}
+	}
+	return string(runes)
 }
 
 // 按unicode排序
