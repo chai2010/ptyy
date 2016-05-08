@@ -2,6 +2,8 @@
 
 [![GoDoc](https://godoc.org/github.com/chai2010/ptyy?status.svg)](https://godoc.org/github.com/chai2010/ptyy)
 
+数据来源: https://github.com/open-power-workgroup/Hospital
+
 ## 安装包
 
 1. `go get github.com/chai2010/ptyy`
