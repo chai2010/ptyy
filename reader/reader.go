@@ -16,11 +16,11 @@ type HospitalDB map[string]HospitalInfo
 
 // 医院信息
 type HospitalInfo struct {
-	Name    string   // 名字
-	City    string   // 城市
-	Addr    []string // 地址
-	WebSite []string // 网站
-	Tel     []string // 电话
+	Name     string   // 名字
+	Keywords []string // 关键字
+	Addr     []string // 地址
+	WebSite  []string // 网站
+	Tel      []string // 电话
 }
 
 // 医院信息, 用于内部解析json
@@ -54,11 +54,10 @@ func readJsonFrom(r io.Reader) (HospitalDB, error) {
 
 	db := make(HospitalDB)
 	for keyword, hospitals := range rawDb {
-		city := keyword
 		for name, info := range hospitals {
 			v, _ := db[name]
 			v.Name = name
-			v.City = city
+			v.Keywords = append(v.Keywords, keyword)
 			v.Addr = append(v.Addr, info.Addr...)
 			v.WebSite = append(v.WebSite, info.WebSite...)
 			v.Tel = append(v.Tel, info.Tel...)
