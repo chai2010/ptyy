@@ -1,0 +1,6 @@
+*.mobileprovision
+*.lock
+*.a
+
+/ios-app/yjyy/build
+.repl_history

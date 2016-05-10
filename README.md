@@ -83,9 +83,14 @@ go run hello.go wuhan
 
 ## 应用案例截图
 
-iOS版本的“野鸡医院”(开发截图), 底层使用了 `ptyy` 作为底层查询引擎:
+iOS版本的 [野鸡医院](./ios-app/yjyy) ( AppStore链接： https://appsto.re/cn/QH8ocb.i ), 底层使用了 `ptyy` 作为底层查询引擎:
 
 ![](./screenshots/yjyy-ios.png)
+
+
+AppStore: https://appsto.re/cn/QH8ocb.i
+
+![](./ios-app/yjyy/misc/appstore-yjyy.png)
 
 ## 报告问题
 

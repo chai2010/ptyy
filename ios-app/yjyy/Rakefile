@@ -1,0 +1,111 @@
+# Copyright 2016 <chaishushan{AT}gmail.com>. All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+# 启动不同版本的模拟器
+# rake target=5.1
+# rake target=8.4 device_name="iPad 2"
+
+$LOAD_PATH.unshift('/Library/RubyMotion/lib')
+require 'motion/project/template/ios'
+
+begin
+  require 'bundler'
+  Bundler.require
+rescue LoadError
+end
+
+# 配置信息
+MY_APP_NAME_DEV = "野鸡医院".freeze
+MY_APP_NAME_ID_DEV = 'yjyy'.freeze
+MY_APP_CODESIGN_CERT_DEV = "iPhone Developer: xxx@xxx.com (xxxxxxxxxx)"
+MY_APP_PROFILE_DEV = "yjyy-debug.mobileprovision"
+
+MY_APP_NAME = "yjyy".freeze
+MY_APP_NAME_ID = 'yjyy'.freeze
+MY_APP_CODESIGN_CERT = "iPhone Distribution: xxx@xxx.com (xxxxxxxxxx)"
+MY_APP_PROFILE = "yjyy-release.mobileprovision"
+
+# 初始化工程信息
+Motion::Project::App.setup do |app|
+  # 账号相关信息从配置文件加载
+  # 开发版和发布版本的证书不同
+  app.development do
+    puts 'build development ...'
+
+    app.name = MY_APP_NAME_DEV
+    app.identifier = MY_APP_NAME_ID_DEV
+
+    app.codesign_certificate = MY_APP_CODESIGN_CERT_DEV
+    app.provisioning_profile = MY_APP_PROFILE_DEV
+  end
+  app.release do
+    puts 'build release ...'
+
+    app.name = MY_APP_NAME
+    app.identifier = MY_APP_NAME_ID
+
+    app.codesign_certificate = MY_APP_CODESIGN_CERT
+    app.provisioning_profile = MY_APP_PROFILE
+  end
+
+  # 图标
+  app.icons << 'icon.png'
+
+  # 简体中文
+  app.info_plist['CFBundleDevelopmentRegion'] = 'zh_CN'
+
+  # 依赖的第三方c静态库
+  # 被引用的c函数会被编译和链接, 函数的接口在头文件中定义
+  app.vendor_project('vendor/gopkg', :static, products: ['libgo.a'], source_files: ['libgo.h'])
+end
+
+# rake devide 安装时认证错误, 暂时采用 ios-deploy 安装
+# npm install -g ios-deploy
+task mydevide: [:"build:device"] do
+  sh "ios-deploy --bundle #{File.dirname(__FILE__)}/build/iPhoneOS-9.3-Development/#{MY_APP_NAME}.app"
+end
+
+# 生成Go扩展包
+task :gopkg do
+  Dir.chdir './vendor/gopkg' do
+    sh './build.sh'
+  end
+end
+
+# 格式化代码
+task :fmt do
+  Dir.chdir './app' do
+    sh 'rubocop -a' do |ok, res|
+      # 忽略错误
+    end
+  end
+  Dir.chdir './spec' do
+    sh 'rubocop -a' do |ok, res|
+      # 忽略错误
+    end
+  end
+  Dir.chdir './vendor/gopkg' do
+    sh 'go fmt ./...'
+  end
+  puts 'Done'
+end
+
+# 生成图标
+task :logo do
+  Dir.chdir './misc' do
+    sh 'convert -resize 120x120 logo.png icon.png'
+    sh 'convert -resize 1024x1024 -alpha off logo.png logo@1024x1024.png'
+  end
+end
+
+# 生成图标
+task :screenshots do
+  Dir.chdir './misc/screenshots' do
+    sh 'convert -resize 640x960 yjyy-iphone4s-1.png yjyy-iphone4s-1@2x.png'
+    sh 'convert -resize 640x960 yjyy-iphone4s-2.png yjyy-iphone4s-2@2x.png'
+    sh 'convert -resize 640x960 yjyy-iphone4s-3.png yjyy-iphone4s-3@2x.png'
+    sh 'convert -resize 640x960 yjyy-iphone4s-4.png yjyy-iphone4s-4@2x.png'
+    sh 'convert -resize 640x960 yjyy-iphone4s-5.png yjyy-iphone4s-5@2x.png'
+  end
+end
