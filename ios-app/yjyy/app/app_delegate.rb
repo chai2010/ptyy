@@ -14,6 +14,9 @@ class AppDelegate
     @window.rootViewController = navigationController
     @window.makeKeyAndVisible
 
+	# 休眠x秒, 用于显示启动画面
+	NSThread.sleepForTimeInterval(1.5)
+
     true
   end
 end
