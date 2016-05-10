@@ -36,7 +36,7 @@ Motion::Project::App.setup do |app|
   app.icons << 'icon.png'
 
   # 版本
-  app.version = "1.0.1"
+  app.version = "1.1.0"
 
   # 简体中文
   app.info_plist['CFBundleDevelopmentRegion'] = 'zh_CN'
@@ -111,12 +111,30 @@ task :logo do
 end
 
 # 生成图标
+# 6sp: 1242x2208
+# 6s: 750x1334
+# 5s: 640x1136
+# 4s: 640x960
 task :screenshots do
   Dir.chdir './misc/screenshots' do
-    sh 'convert -resize 640x960 yjyy-iphone4s-1.png yjyy-iphone4s-1@2x.png'
-    sh 'convert -resize 640x960 yjyy-iphone4s-2.png yjyy-iphone4s-2@2x.png'
-    sh 'convert -resize 640x960 yjyy-iphone4s-3.png yjyy-iphone4s-3@2x.png'
-    sh 'convert -resize 640x960 yjyy-iphone4s-4.png yjyy-iphone4s-4@2x.png'
-    sh 'convert -resize 640x960 yjyy-iphone4s-5.png yjyy-iphone4s-5@2x.png'
+    sh 'convert -resize 750x1334! yjyy-iphone6sp-1.png yjyy-iphone6s-1.png'
+    sh 'convert -resize 750x1334! yjyy-iphone6sp-2.png yjyy-iphone6s-2.png'
+    sh 'convert -resize 750x1334! yjyy-iphone6sp-3.png yjyy-iphone6s-3.png'
+    sh 'convert -resize 750x1334! yjyy-iphone6sp-4.png yjyy-iphone6s-4.png'
+    sh 'convert -resize 750x1334! yjyy-iphone6sp-5.png yjyy-iphone6s-5.png'
+  end
+  Dir.chdir './misc/screenshots' do
+    sh 'convert -resize 640x1136! yjyy-iphone6sp-1.png yjyy-iphone5s-1.png'
+    sh 'convert -resize 640x1136! yjyy-iphone6sp-2.png yjyy-iphone5s-2.png'
+    sh 'convert -resize 640x1136! yjyy-iphone6sp-3.png yjyy-iphone5s-3.png'
+    sh 'convert -resize 640x1136! yjyy-iphone6sp-4.png yjyy-iphone5s-4.png'
+    sh 'convert -resize 640x1136! yjyy-iphone6sp-5.png yjyy-iphone5s-5.png'
+  end
+  Dir.chdir './misc/screenshots' do
+    sh 'convert -resize 640x960! yjyy-iphone6sp-1.png yjyy-iphone4s-1.png'
+    sh 'convert -resize 640x960! yjyy-iphone6sp-2.png yjyy-iphone4s-2.png'
+    sh 'convert -resize 640x960! yjyy-iphone6sp-3.png yjyy-iphone4s-3.png'
+    sh 'convert -resize 640x960! yjyy-iphone6sp-4.png yjyy-iphone4s-4.png'
+    sh 'convert -resize 640x960! yjyy-iphone6sp-5.png yjyy-iphone4s-5.png'
   end
 end
