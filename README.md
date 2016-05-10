@@ -4,12 +4,24 @@
 
 数据来源: https://github.com/open-power-workgroup/Hospital
 
-## 安装包
+iOS应用案例: https://appsto.re/cn/QH8ocb.i
+
+![](./ios-app/yjyy/misc/appstore-yjyy.png)
+
+
+## iOS应用案例截图
+
+iOS版本的 [野鸡医院](./ios-app/yjyy) ( AppStore链接： https://appsto.re/cn/QH8ocb.i ), 底层使用了 `ptyy` 作为底层查询引擎:
+
+![](./screenshots/yjyy-ios.png)
+
+
+## 安装Go语言包
 
 1. `go get github.com/chai2010/ptyy`
 2. `go run hello.go`
 
-## 示例代码
+## Go语言示例代码
 
 ```Go
 package main
@@ -80,17 +92,6 @@ go run hello.go wuhan
 武汉阳光女子医院 (武汉)
 湖北荣军医院 (武汉)
 ```
-
-## 应用案例截图
-
-iOS版本的 [野鸡医院](./ios-app/yjyy) ( AppStore链接： https://appsto.re/cn/QH8ocb.i ), 底层使用了 `ptyy` 作为底层查询引擎:
-
-![](./screenshots/yjyy-ios.png)
-
-
-AppStore: https://appsto.re/cn/QH8ocb.i
-
-![](./ios-app/yjyy/misc/appstore-yjyy.png)
 
 ## 报告问题
 
