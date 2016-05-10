@@ -3,4 +3,6 @@
 *.a
 
 /ios-app/yjyy/build
+/ios-app/yjyy/_config.rb
+
 .repl_history
