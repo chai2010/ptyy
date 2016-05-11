@@ -24,6 +24,9 @@ $myAppProfileDeveloper = "#{$myAppName}-debug.mobileprovision"
 $myAppCodesignCertDistribution = "iPhone Distribution: xxx@xxx.com (xxxxxxxxxx)"
 $myAppProfileDistribution = "#{$myAppName}-release.mobileprovision"
 
+# Go静态库路径
+$yjyyPath = `go list -f "{{.Dir}}"  github.com/chai2010/ptyy/cmd/yjyy`.strip
+
 # 加载可选的配置信息
 if File.exists? "#{File.dirname(__FILE__)}/_config.rb" then
   load("#{File.dirname(__FILE__)}/_config.rb")
@@ -68,7 +71,7 @@ Motion::Project::App.setup do |app|
 
   # 依赖的第三方c静态库
   # 被引用的c函数会被编译和链接, 函数的接口在头文件中定义
-  app.vendor_project('vendor/gopkg', :static, products: ['libgo.a'], source_files: ['libgo.h'])
+  app.vendor_project($yjyyPath, :static, products: ['libyjyy.a'], source_files: ['yjyy.h'])
 end
 
 # rake devide 安装时认证错误, 暂时采用 ios-deploy 安装
@@ -79,7 +82,7 @@ end
 
 # 生成Go扩展包
 task :gopkg do
-  Dir.chdir './vendor/gopkg' do
+  Dir.chdir $yjyyPath do
     sh './build.sh'
   end
 end
@@ -95,9 +98,6 @@ task :fmt do
     sh 'rubocop -a' do |ok, res|
       # 忽略错误
     end
-  end
-  Dir.chdir './vendor/gopkg' do
-    sh 'go fmt ./...'
   end
   puts 'Done'
 end

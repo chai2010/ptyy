@@ -5,7 +5,7 @@
 class DataEngin
   def self.Search(query, limits)
     result = []
-    GopkgYjyySearch(query, limits).each_line do |line|
+    YjyySearch(query, limits).each_line do |line|
       result << line
     end
     result
