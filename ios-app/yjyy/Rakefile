@@ -138,3 +138,14 @@ task :screenshots do
     sh 'convert -resize 640x960! yjyy-iphone6sp-5.png yjyy-iphone4s-5.png'
   end
 end
+
+task :screenshot_small do
+  Dir.chdir './misc/screenshots' do
+    sh 'convert yjyy-iphone4s-1.png yjyy-iphone4s-3.png yjyy-iphone4s-5.png +append yjyy-ios.png'
+	sh 'convert -resize x512 yjyy-ios.png yjyy-ios.png'
+	sh 'convert xc:gray      yjyy-ios.png yjyy-ios.png'
+
+	sh 'rm yjyy-ios-0.png' do "ignore error" end
+	sh 'rm yjyy-ios-1.png' do "ignore error" end
+  end
+end

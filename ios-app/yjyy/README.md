@@ -1,8 +1,16 @@
-# 野鸡医院查询
+# 莆田系等 野鸡医院 查询
+
+*关键字: 莆田, 魏则西, 莆田医院, 野鸡医院, 百度*
 
 用于查询中国大陆比较常见的非公有或私人承包的野鸡医院。
 
+## 运行效果
+
 AppStore: https://appsto.re/cn/QH8ocb.i
+
+![](./misc/screenshots/yjyy-ios.png)
+
+扫码安装:
 
 ![](./misc/appstore-yjyy.png)
 
@@ -32,17 +40,6 @@ AppStore: https://appsto.re/cn/QH8ocb.i
 如果是免费的账号，需要自己是用Xcode生成对应的provisioning profile 配置文件，
 然后运行 `rake build:device` 命令构建目标程序，然后运行 `rake mydevide` 安装到设备（依赖ios-deploy工具）。
 
-## 截屏参数
-
-1. 默认界面
-2. 拼音搜索 (wuhan)
-3. 汉字搜索 (武汉)
-4. 正则搜索 (上海.*（男｜女）子)
-5. 复制结果 (上海.*（男｜女）子)
-
-## 运行效果
-
-![](./misc/screenshots/yjyy-ios.png)
 
 ## 报告问题
 

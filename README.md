@@ -1,20 +1,24 @@
-# 莆田系医院查询
+# 莆田系等 野鸡医院 查询
 
 [![GoDoc](https://godoc.org/github.com/chai2010/ptyy?status.svg)](https://godoc.org/github.com/chai2010/ptyy)
 
+*关键字: 莆田, 魏则西, 莆田医院, 野鸡医院, 百度*
+
+
 数据来源: https://github.com/open-power-workgroup/Hospital
 
-iOS应用案例: https://appsto.re/cn/QH8ocb.i
+
+## iOS版本的 **野鸡医院** 运行效果
+
+AppStore: https://appsto.re/cn/QH8ocb.i
+
+iOS版本的 **野鸡医院** 底层使用了 `ptyy` 作为底层查询引擎:
+
+![](./ios-app/yjyy/misc/screenshots/yjyy-ios.png)
+
+扫码安装:
 
 ![](./ios-app/yjyy/misc/appstore-yjyy.png)
-
-
-## iOS应用案例截图
-
-iOS版本的 [野鸡医院](./ios-app/yjyy) ( AppStore链接： https://appsto.re/cn/QH8ocb.i ), 底层使用了 `ptyy` 作为底层查询引擎:
-
-![](./screenshots/yjyy-ios.png)
-
 
 ## 安装Go语言包
 
