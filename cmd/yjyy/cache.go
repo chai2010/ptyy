@@ -36,7 +36,7 @@ func getFromCache(key string) (value string, ok bool) {
 }
 
 // 更新缓存
-func setFromCache(key, value string) {
+func setToCache(key, value string) {
 	cache.Lock()
 	defer cache.Unlock()
 
@@ -52,6 +52,7 @@ func setFromCache(key, value string) {
 				break
 			}
 		}
+		cache.results[key] = value
 		return
 	}
 
@@ -72,6 +73,6 @@ func clearCache() {
 	cache.Lock()
 	defer cache.Unlock()
 
-	cache.keys = make([]string, 0, maxCachedSize)
+	cache.keys = cache.keys[:0]
 	cache.results = make(map[string]string)
 }
