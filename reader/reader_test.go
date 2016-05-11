@@ -9,7 +9,7 @@ import (
 )
 
 func TestLoadJsonFile(t *testing.T) {
-	db, err := LoadJsonFile("../data/hospital_list.20160508.json")
+	db, err := LoadJsonFile("../static/hospital_list.20160508.json")
 	if err != nil {
 		t.Fatal(err)
 	}
