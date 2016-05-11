@@ -2,8 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// Json数据解析
-package ptyy_reader
+package ptyy
 
 import (
 	"encoding/json"
@@ -17,6 +16,7 @@ type HospitalDB map[string]HospitalInfo
 // 医院信息
 type HospitalInfo struct {
 	Name      string   // 名字
+	City      string   // 城市
 	Keywords  []string // 关键字
 	Addr      []string // 地址
 	WebSite   []string // 网站
@@ -65,6 +65,7 @@ func readJsonFrom(r io.Reader) (HospitalDB, error) {
 		for name, info := range hospitals {
 			v, _ := db[name]
 			v.Name = name
+			v.City = keyword
 			v.Keywords = append(v.Keywords, keyword)
 			v.Addr = append(v.Addr, info.Addr...)
 			v.WebSite = append(v.WebSite, info.WebSite...)

@@ -16,12 +16,6 @@ import (
 
 var _ = fmt.Sprintf
 
-// 医院信息
-type HospitalInfo struct {
-	Name string // 名称
-	City string // 城市
-}
-
 // 医院列表
 var All []HospitalInfo = _AllHospitalInfoList
 
