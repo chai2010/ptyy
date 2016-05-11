@@ -16,6 +16,20 @@ import (
 
 var _ = fmt.Sprintf
 
+// 医院信息
+type HospitalInfo struct {
+	Name      string   // 名字
+	City      string   // 城市
+	Keywords  []string // 关键字(可能含城市名)
+	Addr      []string // 地址
+	WebSite   []string // 网站
+	WeiXin    []string // 微信
+	WeiXinPub []string // 微信公众号
+	Tel       []string // 电话
+	Comment   []string // 注释
+	Feedback  []string // 用户反馈
+}
+
 // 医院列表
 var All []HospitalInfo = _AllHospitalInfoList
 
