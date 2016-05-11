@@ -25,7 +25,7 @@ $myAppCodesignCertDistribution = "iPhone Distribution: xxx@xxx.com (xxxxxxxxxx)"
 $myAppProfileDistribution = "#{$myAppName}-release.mobileprovision"
 
 # Go静态库路径
-$yjyyPath = `go list -f "{{.Dir}}"  github.com/chai2010/ptyy/cmd/yjyy`.strip
+$yjyyPath = `go list -f "{{.Dir}}" github.com/chai2010/ptyy/cmd/yjyy`.strip
 
 # 加载可选的配置信息
 if File.exists? "#{File.dirname(__FILE__)}/_config.rb" then

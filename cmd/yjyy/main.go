@@ -30,5 +30,9 @@ func main() {
 				fmt.Printf("%s (%s)\n", v.Name, v.City)
 			}
 		}
+	} else {
+		for _, v := range ptyy.Search("", *flagLimits) {
+			fmt.Printf("%s (%s)\n", v.Name, v.City)
+		}
 	}
 }
