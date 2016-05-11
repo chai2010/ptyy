@@ -133,7 +133,7 @@ package ptyy
 
 // 读取拼音数据(有多音字)
 func parsePinyinFile() map[rune][]string {
-	data, err := ioutil.ReadFile("./static/pinyin1234.txt")
+	data, err := ioutil.ReadFile("./internal/static/pinyin1234.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -182,7 +182,7 @@ func parsePinyinFile() map[rune][]string {
 
 // 读取列表文件
 func parseInfoList() (infoList []HospitalInfo) {
-	data, err := ioutil.ReadFile("./static/list.txt")
+	data, err := ioutil.ReadFile("./internal/static/list.txt")
 	if err != nil {
 		log.Fatal(err)
 	}

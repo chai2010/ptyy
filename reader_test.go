@@ -8,11 +8,11 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/chai2010/ptyy/static"
+	"github.com/chai2010/ptyy/internal/static"
 )
 
 func TestLoadJsonFile(t *testing.T) {
-	db, err := LoadJsonFile("./static/hospital_list.20160508.json")
+	db, err := LoadJsonFile("./internal/static/hospital_list.20160508.json")
 	if err != nil {
 		t.Fatal(err)
 	}
