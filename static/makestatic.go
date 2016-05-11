@@ -10,9 +10,9 @@
 package main
 
 import (
-	"bufio"
 	"bytes"
 	"fmt"
+	"go/format"
 	"io/ioutil"
 	"os"
 	"unicode/utf8"
@@ -20,6 +20,7 @@ import (
 
 var files = []string{
 	"hospital_list.20160508.json",
+	"pinyin1234.txt",
 }
 
 func main() {
@@ -30,13 +31,7 @@ func main() {
 }
 
 func makestatic() error {
-	f, err := os.Create("static.go")
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-
-	w := bufio.NewWriter(f)
+	w := new(bytes.Buffer)
 
 	fmt.Fprintf(w, `
 // Copyright 2016 <chaishushan{AT}gmail.com>. All rights reserved.
@@ -64,10 +59,16 @@ package static
 		fmt.Fprintln(w, ",\n")
 	}
 	fmt.Fprintln(w, "}")
-	if err := w.Flush(); err != nil {
+
+	data, err := format.Source(w.Bytes())
+	if err != nil {
 		return err
 	}
-	return f.Close()
+	err = ioutil.WriteFile("static.go", data, 0644)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // sanitize prepares a valid UTF-8 string as a raw string constant.
