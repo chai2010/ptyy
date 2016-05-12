@@ -18,6 +18,15 @@ func New(db ...map[string]string) *Searcher {
 	return &Searcher{db: db}
 }
 
+// 关键字查询: 返回列表
+func (p *Searcher) SearchByKeyAll(query string) []string {
+	var ss []string
+	for s := range p.SearchByKey(query) {
+		ss = append(ss, s)
+	}
+	return ss
+}
+
 // 关键字查询: 返回管道
 func (p *Searcher) SearchByKey(query string) <-chan string {
 	// 构造一个带缓存的管道, 用于返回结果
@@ -26,6 +35,11 @@ func (p *Searcher) SearchByKey(query string) <-chan string {
 	// 在另一个goroutine中执行查询操作
 	go func() {
 		defer close(ch)
+
+		// 空值认为是没有匹配结果
+		if query == "" {
+			return
+		}
 
 		// 构建一个map，避免重复的查询
 		foundMap := make(map[string]bool)
@@ -43,7 +57,7 @@ func (p *Searcher) SearchByKey(query string) <-chan string {
 				}
 			}
 
-			// 根本包含关系查询
+			// 根据包含关系查询
 			for k, v := range db {
 				if !foundMap[v] {
 					if strings.Contains(k, query) {
@@ -56,6 +70,15 @@ func (p *Searcher) SearchByKey(query string) <-chan string {
 	}()
 
 	return ch
+}
+
+// 正则查询: 返回列表
+func (p *Searcher) SearchByRegexpAll(query *regexp.Regexp) []string {
+	var ss []string
+	for s := range p.SearchByRegexp(query) {
+		ss = append(ss, s)
+	}
+	return ss
 }
 
 // 正则查询: 返回管道
@@ -83,7 +106,7 @@ func (p *Searcher) SearchByRegexp(query *regexp.Regexp) <-chan string {
 				}
 			}
 
-			// 根本包含关系查询
+			// 根据包含关系查询
 			for k, v := range db {
 				if !foundMap[v] {
 					if reFindFirstIndex(k, query) > 0 {
