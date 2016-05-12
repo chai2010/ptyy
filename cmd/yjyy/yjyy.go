@@ -2,6 +2,11 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+// 改进思路:
+// 1. 缓存最近的查询
+// 2. 尽量缓存全部失败的查询
+// 3. objc环境返回的数据采用NSData类型
+
 package main
 
 //#include "./yjyy.h"
