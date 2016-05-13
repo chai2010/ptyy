@@ -1,0 +1,15 @@
+# Copyright 2016 <chaishushan{AT}gmail.com>. All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+task :default do
+	puts "make default"
+end
+
+task :logo do
+  Dir.chdir './misc' do
+    sh 'convert -resize 29x29 logo@1024x1024.png icon@29x29.png'
+	sh 'convert -resize 40x40 logo@1024x1024.png icon@40x40.png'
+	sh 'convert -resize 60x60 logo@1024x1024.png icon@60x60.png'
+  end
+end
