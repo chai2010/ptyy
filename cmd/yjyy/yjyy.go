@@ -10,6 +10,7 @@
 package main
 
 //#include "./yjyy.h"
+//#include <stdint.h>
 import "C"
 
 import (
@@ -19,6 +20,10 @@ import (
 	"github.com/chai2010/ptyy"
 )
 
+func init() {
+	fmt.Println("yjyy.init")
+}
+
 //export YjyySearch
 func YjyySearch(query *C.char, limits C.int) *C.char {
 	var buf bytes.Buffer
@@ -26,4 +31,9 @@ func YjyySearch(query *C.char, limits C.int) *C.char {
 		fmt.Fprintln(&buf, v.Name)
 	}
 	return C.CString(string(buf.Bytes()))
+}
+
+//export YjyyAdd
+func YjyyAdd(a, b C.int32_t) C.int32_t {
+	return a + b
 }
