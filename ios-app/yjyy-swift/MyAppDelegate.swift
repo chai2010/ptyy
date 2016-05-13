@@ -17,7 +17,7 @@ class MyAppDelegate: UIResponder, UIApplicationDelegate {
 		window!.makeKeyAndVisible()
 
 		// 延长启动界面显示时间
-		NSThread.sleepForTimeInterval(1.3)
+		NSThread.sleepForTimeInterval(0.5)
 		
 		return true
 	}

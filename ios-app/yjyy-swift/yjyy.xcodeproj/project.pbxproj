@@ -10,6 +10,7 @@
 		6F50BD291CE5AF0600BF6D11 /* MyAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F50BD271CE5AF0600BF6D11 /* MyAppDelegate.swift */; };
 		6F50BD2A1CE5AF0600BF6D11 /* MyRootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F50BD281CE5AF0600BF6D11 /* MyRootController.swift */; };
 		6F50BD2C1CE5AF2700BF6D11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F50BD2B1CE5AF2700BF6D11 /* Assets.xcassets */; };
+		6F5215EC1CE61552007B6EBD /* DataEngin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5215EB1CE61552007B6EBD /* DataEngin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +19,7 @@
 		6F50BD271CE5AF0600BF6D11 /* MyAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		6F50BD281CE5AF0600BF6D11 /* MyRootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyRootController.swift; sourceTree = SOURCE_ROOT; };
 		6F50BD2B1CE5AF2700BF6D11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = SOURCE_ROOT; };
+		6F5215EB1CE61552007B6EBD /* DataEngin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataEngin.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +52,7 @@
 		6F2C88841CE4C9FD00E3E3F5 /* yjyy */ = {
 			isa = PBXGroup;
 			children = (
+				6F5215EB1CE61552007B6EBD /* DataEngin.swift */,
 				6F50BD2B1CE5AF2700BF6D11 /* Assets.xcassets */,
 				6F50BD271CE5AF0600BF6D11 /* MyAppDelegate.swift */,
 				6F50BD281CE5AF0600BF6D11 /* MyRootController.swift */,
@@ -128,6 +131,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F5215EC1CE61552007B6EBD /* DataEngin.swift in Sources */,
 				6F50BD291CE5AF0600BF6D11 /* MyAppDelegate.swift in Sources */,
 				6F50BD2A1CE5AF0600BF6D11 /* MyRootController.swift in Sources */,
 			);
@@ -226,10 +230,13 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "yjyy-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -241,10 +248,13 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "yjyy-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
