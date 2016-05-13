@@ -19,5 +19,14 @@ task :logo do
     sh 'convert -resize 29x29 logo@1024x1024.png icon@29x29.png'
 	sh 'convert -resize 40x40 logo@1024x1024.png icon@40x40.png'
 	sh 'convert -resize 60x60 logo@1024x1024.png icon@60x60.png'
+
+	sh 'convert -resize 58x58 logo@1024x1024.png icon@29x29@2x.png'
+	sh 'convert -resize 80x80 logo@1024x1024.png icon@40x40@2x.png'
+	sh 'convert -resize 120x120 logo@1024x1024.png icon@60x60@2x.png'
+
+	sh 'convert -resize 87x87 logo@1024x1024.png icon@29x29@3x.png'
+	sh 'convert -resize 120x120 logo@1024x1024.png icon@40x40@3x.png'
+	sh 'convert -resize 180x180 logo@1024x1024.png icon@60x60@3x.png'
+
   end
 end
