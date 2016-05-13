@@ -11,21 +11,14 @@ class MyAppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-		// 主界面控制器
-		let myRootController = MyRootController()
-		myRootController.title = "野鸡医院查询"
-		myRootController.view.backgroundColor = UIColor.whiteColor()
-
-		// 导航栏
-		let navigationController = UINavigationController(rootViewController: myRootController)
-
-		// 创建主窗口
+		// 创建主窗口(包含导航栏)
 		window = UIWindow(frame: UIScreen.mainScreen().bounds)
-		window!.rootViewController = navigationController
+		window!.rootViewController = UINavigationController(rootViewController: MyRootController())
 		window!.makeKeyAndVisible()
 
 		// 延长启动界面显示时间
-		NSThread.sleepForTimeInterval(2.0)
+		NSThread.sleepForTimeInterval(1.3)
+		
 		return true
 	}
 
