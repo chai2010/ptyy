@@ -25,7 +25,7 @@ func init() {
 }
 
 //export YjyySearch
-func YjyySearch(query *C.char, limits C.int) *C.char {
+func YjyySearch(query *C.char, limits C.int32_t) *C.char {
 	var buf bytes.Buffer
 	for _, v := range ptyy.Search(C.GoString(query), int(limits)) {
 		fmt.Fprintln(&buf, v.Name)

@@ -11,7 +11,7 @@
 extern "C" {
 #endif
 
-extern char* YjyySearch(char* query, int limits);
+extern char* YjyySearch(char* query, int32_t limits);
 
 #ifdef __cplusplus
 }

@@ -10,7 +10,7 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 	var searchWasCancelled = false
 
 	var db:DataEngin = DataEngin()
-	var results:[String] = [ "123", "abc" ]
+	var results:[String] = []
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -50,7 +50,14 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 	// 点击搜索按钮
 	func searchBarSearchButtonClicked(searchBar: UISearchBar) {
 		self.searchWasCancelled = false
-
+		searchBar.showsCancelButton = false
+		
+		// 根据查询条件查询结果
+		self.results = self.db.Search(searchBar.text!)
+		
+		// 更新列表视图
+		self.tableView.reloadData()
+		
 		searchBar.resignFirstResponder()
 	}
 

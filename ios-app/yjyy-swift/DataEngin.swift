@@ -2,17 +2,18 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-@_silgen_name("YjyyAdd")
-func MyAdd(a:Int32, b:Int32) -> Int32
+import UIKit
+
+// 导入Go语言函数
+@_silgen_name("YjyySearch")
+func GoYjyySearch(query:UnsafePointer<CChar>, limits:Int32) -> UnsafeMutablePointer<CChar>
 
 class DataEngin {
 	func Search(query:String) -> [String] {
-		let sum = MyAdd(3, b: 20)
-		print(Int(sum))
+		let p = GoYjyySearch(query, limits: 0)
+		let s = String.fromCString(p)!
+		p.dealloc(1)
 		
-		if query == "" {
-			return [ "123", "abc" ]
-		}
-		return ["111","222"]
+		return s.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
 	}
 }
