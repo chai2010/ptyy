@@ -6,6 +6,14 @@ task :default do
 	puts "make default"
 end
 
+task :"yjyy-bin" do
+	sh "bazel build //:yjyy-bin --xcode_version=7.3 --ios_sdk_version=9.3"
+end
+
+task :clean do
+	sh "bazel clean"
+end
+
 task :logo do
   Dir.chdir './misc' do
     sh 'convert -resize 29x29 logo@1024x1024.png icon@29x29.png'
