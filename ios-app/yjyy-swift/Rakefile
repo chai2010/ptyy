@@ -30,3 +30,10 @@ task :logo do
 
   end
 end
+
+task :screenshot do
+	Dir.chdir './misc' do
+		sh 'convert -resize 320x480! Default-568h@2x.png Default@1x.png'
+		sh 'convert -resize 640x960! Default-568h@2x.png Default@2x.png'
+	end
+end
