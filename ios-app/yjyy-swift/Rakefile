@@ -13,6 +13,13 @@ task :"yjyy-bin" do
 	sh "bazel build //:yjyy-bin --xcode_version=7.3 --ios_sdk_version=9.3"
 end
 
+# 生成Go扩展包
+task :gopkg do
+	Dir.chdir "./vendor/gopkg" do
+		sh './build.sh'
+	end
+end
+
 task :clean do
 	sh "bazel clean"
 end

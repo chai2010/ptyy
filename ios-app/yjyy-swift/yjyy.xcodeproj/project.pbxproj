@@ -11,7 +11,8 @@
 		6F50BD2A1CE5AF0600BF6D11 /* MyRootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F50BD281CE5AF0600BF6D11 /* MyRootController.swift */; };
 		6F50BD2C1CE5AF2700BF6D11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F50BD2B1CE5AF2700BF6D11 /* Assets.xcassets */; };
 		6F5215EC1CE61552007B6EBD /* DataEngin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5215EB1CE61552007B6EBD /* DataEngin.swift */; };
-		6F5215EE1CE61A9F007B6EBD /* libyjyy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F5215ED1CE61A9F007B6EBD /* libyjyy.a */; };
+		6F5215F01CE6C382007B6EBD /* lru_cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5215EF1CE6C382007B6EBD /* lru_cache.swift */; };
+		6F5215F41CE6C5EC007B6EBD /* libyjyy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F5215F31CE6C5EC007B6EBD /* libyjyy.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,7 +22,8 @@
 		6F50BD281CE5AF0600BF6D11 /* MyRootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyRootController.swift; sourceTree = SOURCE_ROOT; };
 		6F50BD2B1CE5AF2700BF6D11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		6F5215EB1CE61552007B6EBD /* DataEngin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataEngin.swift; sourceTree = SOURCE_ROOT; };
-		6F5215ED1CE61A9F007B6EBD /* libyjyy.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyjyy.a; sourceTree = "<group>"; };
+		6F5215EF1CE6C382007B6EBD /* lru_cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = lru_cache.swift; sourceTree = SOURCE_ROOT; };
+		6F5215F31CE6C5EC007B6EBD /* libyjyy.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyjyy.a; path = vendor/gopkg/libyjyy.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,7 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6F5215EE1CE61A9F007B6EBD /* libyjyy.a in Frameworks */,
+				6F5215F41CE6C5EC007B6EBD /* libyjyy.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -39,7 +41,7 @@
 		6F2C88791CE4C9FD00E3E3F5 = {
 			isa = PBXGroup;
 			children = (
-				6F5215ED1CE61A9F007B6EBD /* libyjyy.a */,
+				6F5215F31CE6C5EC007B6EBD /* libyjyy.a */,
 				6F2C88841CE4C9FD00E3E3F5 /* yjyy */,
 				6F2C88831CE4C9FD00E3E3F5 /* Products */,
 			);
@@ -56,6 +58,7 @@
 		6F2C88841CE4C9FD00E3E3F5 /* yjyy */ = {
 			isa = PBXGroup;
 			children = (
+				6F5215EF1CE6C382007B6EBD /* lru_cache.swift */,
 				6F5215EB1CE61552007B6EBD /* DataEngin.swift */,
 				6F50BD2B1CE5AF2700BF6D11 /* Assets.xcassets */,
 				6F50BD271CE5AF0600BF6D11 /* MyAppDelegate.swift */,
@@ -135,6 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F5215F01CE6C382007B6EBD /* lru_cache.swift in Sources */,
 				6F5215EC1CE61552007B6EBD /* DataEngin.swift in Sources */,
 				6F50BD291CE5AF0600BF6D11 /* MyAppDelegate.swift in Sources */,
 				6F50BD2A1CE5AF0600BF6D11 /* MyRootController.swift in Sources */,
@@ -242,6 +246,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/vendor/gopkg",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "yjyy-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -265,6 +270,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/vendor/gopkg",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "yjyy-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
