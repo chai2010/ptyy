@@ -20,10 +20,6 @@ import (
 	"github.com/chai2010/ptyy"
 )
 
-func init() {
-	fmt.Println("yjyy.init")
-}
-
 //export YjyySearch
 func YjyySearch(query *C.char, limits C.int32_t) *C.char {
 	var buf bytes.Buffer
