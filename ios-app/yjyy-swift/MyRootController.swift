@@ -18,7 +18,11 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 		self.title = "野鸡医院查询"
 		self.view.backgroundColor = UIColor.whiteColor()
 
-		let aboutBtn = UIBarButtonItem(title: "关于", style: UIBarButtonItemStyle.Plain, target: self, action:#selector(showAbout))
+		
+		let changelogBtn = UIBarButtonItem(title: "更多", style: UIBarButtonItemStyle.Done, target: self, action:#selector(moreInfo))
+		self.navigationItem.leftBarButtonItem = changelogBtn
+		
+		let aboutBtn = UIBarButtonItem(title: "关于", style: UIBarButtonItemStyle.Done, target: self, action:#selector(showAbout))
 		self.navigationItem.rightBarButtonItem = aboutBtn
 
 		let searchBar = UISearchBar(frame: CGRectMake(0, 0, tableView.frame.size.width, 0))
@@ -36,6 +40,17 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 
 		// 生成初始列表
 		self.searchBarSearchButtonClicked(searchBar)
+	}
+	
+	
+	// 更多信息
+	func moreInfo(b:UIBarButtonItem) {
+		UIAlertView(
+			title: "更多信息",
+			message: "更新日志",
+			delegate: nil,
+			cancelButtonTitle: "确定"
+		).show()
 	}
 	
 	// 关于
@@ -65,7 +80,7 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 
 	// 表格单元
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier(CellReuseIdentifier, forIndexPath: indexPath) as UITableViewCell
+		let cell = tableView.dequeueReusableCellWithIdentifier(CellReuseIdentifier, forIndexPath:indexPath) as UITableViewCell
 		cell.textLabel?.text = self.results[indexPath.row]
 		return cell
 	}
@@ -146,6 +161,38 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 		if indexPath == tableView.indexPathForSelectedRow {
 			tableView.deselectRowAtIndexPath(indexPath, animated: true)
 		}
+	}
+	
+	// 右侧索引
+	//override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
+	//	var keys:[String] = []
+	//	for ch in "ABCDEFGHIJKLMNOPQRSTUVWXYZ#".characters {
+	//		keys.append("\(ch)")
+	//	}
+	//	return keys
+	//}
+	//override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
+	//	return 1
+	//}
+
+	
+	// 拼音首字母, [A-Z]#
+	func getFistLetter(str: String)-> String {
+		let mutStr = NSMutableString(string: str) as CFMutableString
+		
+		// 取得带音调拼音
+		if CFStringTransform(mutStr, nil,kCFStringTransformMandarinLatin, false) {
+			// 取得不带音调拼音
+			if CFStringTransform(mutStr, nil, kCFStringTransformStripDiacritics, false) {
+				let pinyin = mutStr as String
+				print(pinyin)
+				if pinyin.characters.count > 0 {
+					return (pinyin as NSString).substringToIndex(1)
+				}
+			}
+		}
+
+		return "#"
 	}
 
 	// 内存报警
