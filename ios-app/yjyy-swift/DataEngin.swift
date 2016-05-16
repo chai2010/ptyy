@@ -51,10 +51,7 @@ class DataEngin {
 			let c = letters.characterAtIndex(i)
 			resultList.append(resultMap[String(UnicodeScalar(c))]!)
 		}
-		
-		// sort
-		
-		print("resultList: \(resultList)")
+
 		return resultList
 	}
 
