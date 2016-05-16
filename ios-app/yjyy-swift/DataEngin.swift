@@ -87,7 +87,7 @@ class DataEngin {
 			return "G"
 		}
 		if str[0] == "厦" {
-			return "G"
+			return "X"
 		}
 
 
