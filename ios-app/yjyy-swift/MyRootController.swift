@@ -10,7 +10,7 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 	var searchWasCancelled = false
 
 	var db:DataEngin = DataEngin()
-	var results:[String] = []
+	var results = [[String]]()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -43,6 +43,10 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 		self.tableView.tableFooterView = footerBar
 		self.tableView.dataSource = self
 		self.tableView.delegate = self
+		
+		self.tableView.sectionIndexBackgroundColor = UIColor.darkGrayColor()
+		self.tableView.sectionIndexTrackingBackgroundColor = UIColor.blackColor()
+		self.tableView.sectionIndexColor = UIColor.whiteColor()
 		
 		// 注册TableViewCell
 		self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: CellReuseIdentifier)
@@ -83,14 +87,20 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 	}
 
 	// 表格单元数目
-	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		return self.results.count
+	}
+	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		//if section >= self.results.count {
+		//	return 0
+		//}
+		return self.results[section].count
 	}
 
 	// 表格单元
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier(CellReuseIdentifier, forIndexPath:indexPath) as UITableViewCell
-		cell.textLabel?.text = self.results[indexPath.row]
+		cell.textLabel?.text = self.results[indexPath.section][indexPath.row]
 		return cell
 	}
 
@@ -100,10 +110,10 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 		searchBar.showsCancelButton = false
 
 		// 根据查询条件查询结果
-		self.results = self.db.Search(searchBar.text!)
+		self.results = self.db.SearchV2(searchBar.text!)
 		
 		let footerBar = self.tableView.tableFooterView as? UILabel
-		footerBar!.text = "共 \(self.results.count) 个结果\n"
+		footerBar!.text = "共 \(self.numberOfResult()) 个结果\n"
 
 		// 更新列表视图
 		self.tableView.reloadData()
@@ -117,10 +127,10 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 		searchBar.showsCancelButton = true
 
 		// 根据查询条件查询结果
-		self.results = self.db.Search(searchBar.text!)
+		self.results = self.db.SearchV2(searchBar.text!)
 		
 		let footerBar = self.tableView.tableFooterView as? UILabel
-		footerBar!.text = "共 \(self.results.count) 个结果\n"
+		footerBar!.text = "共 \(self.numberOfResult()) 个结果\n"
 
 		// 更新列表视图
 		self.tableView.reloadData()
@@ -134,10 +144,10 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 		searchBar.text = ""
 
 		// 根据查询条件查询结果(没有查询条件)
-		self.results = self.db.Search("")
+		self.results = self.db.SearchV2("")
 		
 		let footerBar = self.tableView.tableFooterView as? UILabel
-		footerBar!.text = "共 \(self.results.count) 个结果\n"
+		footerBar!.text = "共 \(self.numberOfResult()) 个结果\n"
 
 		// 更新列表视图
 		self.tableView.reloadData()
@@ -182,36 +192,23 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 	}
 	
 	// 右侧索引
-	//override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
-	//	var keys:[String] = []
-	//	for ch in "ABCDEFGHIJKLMNOPQRSTUVWXYZ#".characters {
-	//		keys.append("\(ch)")
-	//	}
-	//	return keys
-	//}
-	//override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
-	//	return 1
-	//}
-
-	
-	// 拼音首字母, [A-Z]#
-	func getFistLetter(str: String)-> String {
-		let mutStr = NSMutableString(string: str) as CFMutableString
-		
-		// 取得带音调拼音
-		if CFStringTransform(mutStr, nil,kCFStringTransformMandarinLatin, false) {
-			// 取得不带音调拼音
-			if CFStringTransform(mutStr, nil, kCFStringTransformStripDiacritics, false) {
-				let pinyin = mutStr as String
-				print(pinyin)
-				if pinyin.characters.count > 0 {
-					return (pinyin as NSString).substringToIndex(1)
-				}
-			}
+	override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
+		var keys:[String] = []
+		for ch in "ABCDEFGHIJKLMNOPQRSTUVWXYZ#".characters {
+			keys.append("\(ch)")
 		}
-
-		return "#"
+		return keys
 	}
+	
+	// 结果总数
+	func numberOfResult() -> Int {
+		var sum:Int = 0
+		for x in self.results {
+			sum += x.count
+		}
+		return sum
+	}
+	
 	
 	// 内存报警
 	override func didReceiveMemoryWarning() {
