@@ -30,11 +30,20 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 		searchBar.showsCancelButton = false
 		searchBar.delegate = self
 		searchBar.sizeToFit()
+		
+		let footerBar = UILabel()
+		footerBar.text = "共 N 个结果\n"
+		footerBar.textAlignment = NSTextAlignment.Center
+		footerBar.numberOfLines = 0
+		footerBar.lineBreakMode = NSLineBreakMode.ByWordWrapping
+		footerBar.textColor = UIColor.darkGrayColor()
+		footerBar.sizeToFit()
 
 		self.tableView.tableHeaderView = searchBar
+		self.tableView.tableFooterView = footerBar
 		self.tableView.dataSource = self
 		self.tableView.delegate = self
-
+		
 		// 注册TableViewCell
 		self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: CellReuseIdentifier)
 
@@ -92,6 +101,9 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 
 		// 根据查询条件查询结果
 		self.results = self.db.Search(searchBar.text!)
+		
+		let footerBar = self.tableView.tableFooterView as? UILabel
+		footerBar!.text = "共 \(self.results.count) 个结果\n"
 
 		// 更新列表视图
 		self.tableView.reloadData()
@@ -106,6 +118,9 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 
 		// 根据查询条件查询结果
 		self.results = self.db.Search(searchBar.text!)
+		
+		let footerBar = self.tableView.tableFooterView as? UILabel
+		footerBar!.text = "共 \(self.results.count) 个结果\n"
 
 		// 更新列表视图
 		self.tableView.reloadData()
@@ -120,6 +135,9 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 
 		// 根据查询条件查询结果(没有查询条件)
 		self.results = self.db.Search("")
+		
+		let footerBar = self.tableView.tableFooterView as? UILabel
+		footerBar!.text = "共 \(self.results.count) 个结果\n"
 
 		// 更新列表视图
 		self.tableView.reloadData()
@@ -194,7 +212,7 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 
 		return "#"
 	}
-
+	
 	// 内存报警
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()

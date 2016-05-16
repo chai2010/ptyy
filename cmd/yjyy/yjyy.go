@@ -23,8 +23,13 @@ import (
 //export YjyySearch
 func YjyySearch(query *C.char, limits C.int32_t) *C.char {
 	var buf bytes.Buffer
-	for _, v := range ptyy.Search(C.GoString(query), int(limits)) {
-		fmt.Fprintln(&buf, v.Name)
+	var list = ptyy.Search(C.GoString(query), int(limits))
+	for i, v := range list {
+		if i < len(list)-1 {
+			fmt.Fprintln(&buf, v.Name)
+		} else {
+			fmt.Fprint(&buf, v.Name)
+		}
 	}
 	return C.CString(string(buf.Bytes()))
 }
