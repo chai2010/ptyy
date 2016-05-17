@@ -42,8 +42,10 @@ class DataEngin {
 		}
 		
 		for s in self.Search(query) {
-			let key = self.getFistLetter(s)
-			resultMap[key]!.append(s)
+			if !s.isEmpty {
+				let key = self.getFistLetter(s)
+				resultMap[key]!.append(s)
+			}
 		}
 		
 		var resultList = [[String]]()

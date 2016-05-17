@@ -4,12 +4,12 @@
 
 import UIKit
 
-class MyRootController: UITableViewController, UISearchBarDelegate {
+class MyRootControllerV2: UITableViewController, UISearchBarDelegate {
 
 	let CellReuseIdentifier = "yjyy.result.cell"
 
 	var db:DataEngin = DataEngin()
-	var results = [String]()
+	var results = [[String]]()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -26,7 +26,7 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 		searchBar.showsCancelButton = false
 		searchBar.delegate = self
 		searchBar.sizeToFit()
-		
+
 		let footerBar = UILabel()
 		footerBar.text = "共 N 个结果\n"
 		footerBar.textAlignment = NSTextAlignment.Center
@@ -39,14 +39,14 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 		self.tableView.tableFooterView = footerBar
 		self.tableView.dataSource = self
 		self.tableView.delegate = self
-		
+
 		// 注册TableViewCell
 		self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: CellReuseIdentifier)
 
 		// 生成初始列表
 		self.searchBarSearchButtonClicked(searchBar)
 	}
-	
+
 	// 关于
 	func showAbout(b:UIBarButtonItem) {
 		let message = "" +
@@ -58,7 +58,7 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 		"\n" +
 		"http://github.com/chai2010/ptyy\n" +
 		"版权 2016"
-		
+
 		UIAlertView(
 			title: "关于 野鸡医院",
 			message: message,
@@ -69,24 +69,24 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 
 	// 表格单元数目
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		return 1
+		return self.results.count
 	}
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return self.results.count
+		return self.results[section].count
 	}
 
 	// 表格单元
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier(CellReuseIdentifier, forIndexPath:indexPath) as UITableViewCell
-		cell.textLabel?.text = self.results[indexPath.row]
+		cell.textLabel?.text = self.results[indexPath.section][indexPath.row]
 		return cell
 	}
 
 	// 点击搜索按钮
 	func searchBarSearchButtonClicked(searchBar: UISearchBar) {
 		// 根据查询条件查询结果
-		self.results = self.db.Search(searchBar.text!)
-		
+		self.results = self.db.SearchV2(searchBar.text!)
+
 		let footerBar = self.tableView.tableFooterView as? UILabel
 		footerBar!.text = "共 \(self.numberOfResult()) 个结果\n"
 
@@ -99,8 +99,8 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 	// 检索词发生变化
 	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
 		// 根据查询条件查询结果
-		self.results = self.db.Search(searchBar.text!)
-		
+		self.results = self.db.SearchV2(searchBar.text!)
+
 		let footerBar = self.tableView.tableFooterView as? UILabel
 		footerBar!.text = "共 \(self.numberOfResult()) 个结果\n"
 
@@ -116,8 +116,8 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 		searchBar.text = ""
 
 		// 根据查询条件查询结果(没有查询条件)
-		self.results = self.db.Search("")
-		
+		self.results = self.db.SearchV2("")
+
 		let footerBar = self.tableView.tableFooterView as? UILabel
 		footerBar!.text = "共 \(self.numberOfResult()) 个结果\n"
 
@@ -156,13 +156,26 @@ class MyRootController: UITableViewController, UISearchBarDelegate {
 			tableView.deselectRowAtIndexPath(indexPath, animated: true)
 		}
 	}
-	
+
+	// 右侧索引
+	override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
+		var keys:[String] = []
+		for ch in "ABCDEFGHIJKLMNOPQRSTUVWXYZ#".characters {
+			keys.append("\(ch)")
+		}
+		return keys
+	}
+
 	// 结果总数
 	func numberOfResult() -> Int {
-		return self.results.count
+		var sum:Int = 0
+		for x in self.results {
+			sum += x.count
+		}
+		return sum
 	}
-	
-	
+
+
 	// 内存报警
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
