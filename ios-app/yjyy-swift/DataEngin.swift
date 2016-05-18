@@ -54,6 +54,7 @@ class DataEngin {
 			resultList.append(resultMap[String(UnicodeScalar(c))]!)
 		}
 
+		self.cacheV2[query] = resultList
 		return resultList
 	}
 
