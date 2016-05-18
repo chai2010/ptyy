@@ -49,5 +49,6 @@ task :screenshot do
 	Dir.chdir './misc' do
 		sh 'convert -resize 320x480! Default-568h@2x.png Default@1x.png'
 		sh 'convert -resize 640x960! Default-568h@2x.png Default@2x.png'
+		sh 'convert -resize 1536x2048! Default-736h@3x.png Default@ipad@1536x2048.png'
 	end
 end

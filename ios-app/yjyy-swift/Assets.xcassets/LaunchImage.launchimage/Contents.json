@@ -1,5 +1,14 @@
 {
   "images" : [
+	{
+	  "filename" : "Default@ipad@1536x2048.png",
+	  "orientation" : "portrait",
+	  "idiom" : "ipad",
+	  "extent" : "full-screen",
+	  "minimum-system-version" : "7.0",
+	  "scale" : "2x"
+	},
+
     {
 	  "filename" : "Default-736h@3x.png",
 	  "orientation" : "portrait",
