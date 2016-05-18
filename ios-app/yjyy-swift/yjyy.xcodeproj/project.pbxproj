@@ -16,6 +16,7 @@
 		6F646D6E1CEB56BE00FE3D1C /* MyRootControllerV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F646D6D1CEB56BE00FE3D1C /* MyRootControllerV2.swift */; };
 		6F646D711CEBFA1E00FE3D1C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F646D6F1CEBFA1E00FE3D1C /* MainViewController.swift */; };
 		6F646D721CEBFA1E00FE3D1C /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F646D701CEBFA1E00FE3D1C /* MainViewController.xib */; };
+		6F6A8D281CECAF490036C0A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F6A8D271CECAF490036C0A7 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		6F646D6D1CEB56BE00FE3D1C /* MyRootControllerV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyRootControllerV2.swift; sourceTree = SOURCE_ROOT; };
 		6F646D6F1CEBFA1E00FE3D1C /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = SOURCE_ROOT; };
 		6F646D701CEBFA1E00FE3D1C /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = SOURCE_ROOT; };
+		6F6A8D271CECAF490036C0A7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				6F2C88911CE4C9FD00E3E3F5 /* Info.plist */,
 				6F646D6F1CEBFA1E00FE3D1C /* MainViewController.swift */,
 				6F646D701CEBFA1E00FE3D1C /* MainViewController.xib */,
+				6F6A8D271CECAF490036C0A7 /* LaunchScreen.storyboard */,
 			);
 			path = yjyy;
 			sourceTree = "<group>";
@@ -136,6 +139,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F6A8D281CECAF490036C0A7 /* LaunchScreen.storyboard in Resources */,
 				6F50BD2C1CE5AF2700BF6D11 /* Assets.xcassets in Resources */,
 				6F646D721CEBFA1E00FE3D1C /* MainViewController.xib in Resources */,
 			);
