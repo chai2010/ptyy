@@ -100,8 +100,17 @@ func genPinyinFile(filename string, infoList []HospitalInfo, pyMap map[rune][]st
 package ptyy
 `[1:])
 
+	// 字符排序(避免代码抖动)
+	var keyList []int
+	for r, _ := range pyMap {
+		keyList = append(keyList, int(r))
+	}
+	sort.Ints(keyList)
+
 	fmt.Fprintln(&buf, `var _RunePinyinTable = map[rune]string{`)
-	for r, pyList := range pyMap {
+	for i := 0; i < len(keyList); i++ {
+		r, pyList := rune(keyList[i]), pyMap[rune(keyList[i])]
+
 		// 只输出用到的汉字
 		if !usedRuneMap[r] {
 			continue
@@ -186,7 +195,7 @@ func parsePinyinFile() map[rune][]string {
 
 // 读取列表文件
 func parseInfoList() (infoList []HospitalInfo) {
-	r := strings.NewReader(static.Files["hospital_list.20160508.json"])
+	r := strings.NewReader(static.Files["hospital_list.20160519.json"])
 	db, err := hospital_parser.ReadJsonFrom(r)
 	if err != nil {
 		log.Fatal(err)
@@ -270,6 +279,7 @@ var g_pinyinPatch = map[rune]string{
 	'脊': "ji2",
 	'伯': "bo2",
 	'似': "si4",
+	'艾': "ai4",
 }
 
 // 忽略行的关键字

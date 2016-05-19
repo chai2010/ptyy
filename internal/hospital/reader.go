@@ -62,10 +62,15 @@ func readJsonFrom(r io.Reader) (HospitalDB, error) {
 
 	db := make(HospitalDB)
 	for keyword, hospitals := range rawDb {
+		if keyword == "网站" {
+			continue
+		}
 		for name, info := range hospitals {
 			v, _ := db[name]
 			v.Name = name
-			v.City = keyword
+			if !isNotCity(keyword) {
+				v.City = keyword
+			}
 			v.Keywords = append(v.Keywords, keyword)
 			v.Addr = append(v.Addr, info.Addr...)
 			v.WebSite = append(v.WebSite, info.WebSite...)
@@ -84,4 +89,24 @@ func parseHospitalJsonDB(r io.Reader) (map[string]map[string]_HospitalInfo, erro
 		return nil, err
 	}
 	return result, nil
+}
+
+func isNotCity(name string) bool {
+	for _, s := range g_notCityList {
+		if s == name {
+			return true
+		}
+	}
+	return false
+}
+
+var g_notCityList = []string{
+	"网站",
+	"林氏家族",
+	"黄氏家族",
+	"陈氏家族",
+	"妇科/产科",
+	"三甲医院外包科室名单如下",
+	"整形科",
+	"不孕症",
 }

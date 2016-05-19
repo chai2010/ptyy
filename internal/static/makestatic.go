@@ -20,6 +20,7 @@ import (
 
 var files = []string{
 	"hospital_list.20160508.json",
+	"hospital_list.20160519.json",
 	"pinyin1234.txt",
 }
 
