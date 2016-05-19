@@ -61,6 +61,9 @@ package ptyy
 	fmt.Fprintf(&buf, "// 共 %d 个记录\n", len(infoList))
 	fmt.Fprintln(&buf, `var _AllHospitalInfoList = []HospitalInfo{`)
 	for _, info := range infoList {
+		if strContainsDigit(info.Name) {
+			//fmt.Printf("含数字: %s\n", info.Name)
+		}
 		fmt.Fprintf(&buf, "{Name: %q, City: %q},\n", info.Name, info.City)
 	}
 	fmt.Fprintln(&buf, "}")
@@ -252,6 +255,34 @@ func isCompanyName(name string) bool {
 func isHospitalName(name string) bool {
 	for _, key := range g_HospitalKeywordsList {
 		if strings.Contains(name, key) {
+			return true
+		}
+	}
+	return false
+}
+
+// 包含数字
+func strContainsDigit(s string) bool {
+	for _, c := range s {
+		if isDigitRune(c) {
+			return true
+		}
+	}
+	return false
+}
+
+// 是否为数字
+func isDigitRune(c rune) bool {
+	if c >= '0' && c <= '9' {
+		return true
+	}
+	for _, v := range "零一二三四五六七八九十" {
+		if c == v {
+			return true
+		}
+	}
+	for _, v := range "零壹贰叁肆伍陆柒捌玖拾" {
+		if c == v {
 			return true
 		}
 	}
