@@ -7,31 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6F50BD291CE5AF0600BF6D11 /* MyAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F50BD271CE5AF0600BF6D11 /* MyAppDelegate.swift */; };
-		6F50BD2A1CE5AF0600BF6D11 /* MyRootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F50BD281CE5AF0600BF6D11 /* MyRootController.swift */; };
 		6F50BD2C1CE5AF2700BF6D11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F50BD2B1CE5AF2700BF6D11 /* Assets.xcassets */; };
 		6F5215EC1CE61552007B6EBD /* DataEngin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5215EB1CE61552007B6EBD /* DataEngin.swift */; };
-		6F5215F01CE6C382007B6EBD /* lru_cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5215EF1CE6C382007B6EBD /* lru_cache.swift */; };
 		6F5215F41CE6C5EC007B6EBD /* libyjyy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F5215F31CE6C5EC007B6EBD /* libyjyy.a */; };
-		6F646D6E1CEB56BE00FE3D1C /* MyRootControllerV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F646D6D1CEB56BE00FE3D1C /* MyRootControllerV2.swift */; };
 		6F646D711CEBFA1E00FE3D1C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F646D6F1CEBFA1E00FE3D1C /* MainViewController.swift */; };
 		6F646D721CEBFA1E00FE3D1C /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F646D701CEBFA1E00FE3D1C /* MainViewController.xib */; };
 		6F6A8D281CECAF490036C0A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F6A8D271CECAF490036C0A7 /* LaunchScreen.storyboard */; };
+		6F6A8D2B1CED630A0036C0A7 /* LRUCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6A8D291CED630A0036C0A7 /* LRUCache.swift */; };
+		6F6A8D2C1CED630A0036C0A7 /* MainAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6A8D2A1CED630A0036C0A7 /* MainAppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6F2C88821CE4C9FD00E3E3F5 /* yjyy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yjyy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F2C88911CE4C9FD00E3E3F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6F50BD271CE5AF0600BF6D11 /* MyAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAppDelegate.swift; sourceTree = SOURCE_ROOT; };
-		6F50BD281CE5AF0600BF6D11 /* MyRootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyRootController.swift; sourceTree = SOURCE_ROOT; };
 		6F50BD2B1CE5AF2700BF6D11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		6F5215EB1CE61552007B6EBD /* DataEngin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataEngin.swift; sourceTree = SOURCE_ROOT; };
-		6F5215EF1CE6C382007B6EBD /* lru_cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = lru_cache.swift; sourceTree = SOURCE_ROOT; };
 		6F5215F31CE6C5EC007B6EBD /* libyjyy.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyjyy.a; path = vendor/gopkg/libyjyy.a; sourceTree = "<group>"; };
-		6F646D6D1CEB56BE00FE3D1C /* MyRootControllerV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyRootControllerV2.swift; sourceTree = SOURCE_ROOT; };
 		6F646D6F1CEBFA1E00FE3D1C /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = SOURCE_ROOT; };
 		6F646D701CEBFA1E00FE3D1C /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = SOURCE_ROOT; };
 		6F6A8D271CECAF490036C0A7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
+		6F6A8D291CED630A0036C0A7 /* LRUCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LRUCache.swift; sourceTree = SOURCE_ROOT; };
+		6F6A8D2A1CED630A0036C0A7 /* MainAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainAppDelegate.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,12 +62,10 @@
 		6F2C88841CE4C9FD00E3E3F5 /* yjyy */ = {
 			isa = PBXGroup;
 			children = (
-				6F646D6D1CEB56BE00FE3D1C /* MyRootControllerV2.swift */,
-				6F5215EF1CE6C382007B6EBD /* lru_cache.swift */,
+				6F6A8D291CED630A0036C0A7 /* LRUCache.swift */,
+				6F6A8D2A1CED630A0036C0A7 /* MainAppDelegate.swift */,
 				6F5215EB1CE61552007B6EBD /* DataEngin.swift */,
 				6F50BD2B1CE5AF2700BF6D11 /* Assets.xcassets */,
-				6F50BD271CE5AF0600BF6D11 /* MyAppDelegate.swift */,
-				6F50BD281CE5AF0600BF6D11 /* MyRootController.swift */,
 				6F2C88911CE4C9FD00E3E3F5 /* Info.plist */,
 				6F646D6F1CEBFA1E00FE3D1C /* MainViewController.swift */,
 				6F646D701CEBFA1E00FE3D1C /* MainViewController.xib */,
@@ -152,12 +146,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6F646D6E1CEB56BE00FE3D1C /* MyRootControllerV2.swift in Sources */,
-				6F5215F01CE6C382007B6EBD /* lru_cache.swift in Sources */,
+				6F6A8D2B1CED630A0036C0A7 /* LRUCache.swift in Sources */,
+				6F6A8D2C1CED630A0036C0A7 /* MainAppDelegate.swift in Sources */,
 				6F5215EC1CE61552007B6EBD /* DataEngin.swift in Sources */,
 				6F646D711CEBFA1E00FE3D1C /* MainViewController.swift in Sources */,
-				6F50BD291CE5AF0600BF6D11 /* MyAppDelegate.swift in Sources */,
-				6F50BD2A1CE5AF0600BF6D11 /* MyRootController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

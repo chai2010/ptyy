@@ -5,7 +5,7 @@
 import UIKit
 
 @UIApplicationMain
-class MyAppDelegate: UIResponder, UIApplicationDelegate {
+class MainAppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
 
