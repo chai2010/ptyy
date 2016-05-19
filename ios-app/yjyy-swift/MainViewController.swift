@@ -9,7 +9,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UITableViewDele
 	@IBOutlet weak var navigationBar: UINavigationBar!
 	@IBOutlet weak var searchBar: UISearchBar!
 	@IBOutlet weak var tableView: UITableView!
-
+	
 	let CellReuseIdentifier = "yjyy.result.cell"
 
 	var db:DataEngin = DataEngin()
@@ -49,11 +49,9 @@ class MainViewController: UIViewController, UISearchBarDelegate, UITableViewDele
 	// 关于按钮
 	@IBAction func onAbout(sender: UIBarButtonItem) {
 		let message = "" +
-		"用于查询中国大陆较常见的非公有或私人承包的野鸡医院或科室(以莆田系为主)，支持 拼音/汉字/正则 查询。\n" +
+		"用于查询中国大陆较常见的非公有或私人承包的野鸡医院或科室(以莆田系为主)，支持 拼音/汉字/数字/正则 查询。\n" +
 		"\n" +
-		"原始数据来源于GitHub网站：http://github.com/open-power-workgroup/Hospital\n" +
-		"\n" +
-		"查询结果只是作为就医前的一个参考，本应用并不保证结果的真实性和准确性，请用户自行判断真伪。\n" +
+		"查询数据来源于互联网, 本应用并不保证数据的真实性和准确性，查询结果只作为就医前的一个参考。\n" +
 		"\n" +
 		"http://github.com/chai2010/ptyy\n" +
 		"版权 2016"

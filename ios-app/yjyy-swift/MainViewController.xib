@@ -18,7 +18,7 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <searchBar contentMode="redraw" placeholder="拼音 或 汉字" translatesAutoresizingMaskIntoConstraints="NO" id="2RH-KB-fHe">
+                <searchBar contentMode="redraw" placeholder="拼音/汉字/数字/正则" translatesAutoresizingMaskIntoConstraints="NO" id="2RH-KB-fHe">
                     <rect key="frame" x="0.0" y="64" width="600" height="44"/>
                     <textInputTraits key="textInputTraits" returnKeyType="search"/>
                 </searchBar>
