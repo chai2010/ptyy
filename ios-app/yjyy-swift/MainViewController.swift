@@ -9,8 +9,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, UITableViewDele
 	@IBOutlet weak var navigationBar: UINavigationBar!
 	@IBOutlet weak var searchBar: UISearchBar!
 	@IBOutlet weak var tableView: UITableView!
-	
-	let CellReuseIdentifier = "yjyy.result.cell"
 
 	var db:DataEngin = DataEngin()
 	var results = [[String]]()
@@ -33,7 +31,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UITableViewDele
 		self.tableView.delegate = self
 
 		// 注册TableViewCell
-		self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: CellReuseIdentifier)
+		self.tableView.registerClass(MyCustomMenuCell.self, forCellReuseIdentifier: MyCustomMenuCell.ReuseIdentifier)
 
 		// 生成初始列表
 		self.searchBarSearchButtonClicked(searchBar)
@@ -78,7 +76,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UITableViewDele
 
 	// 表格单元
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier(CellReuseIdentifier, forIndexPath:indexPath) as UITableViewCell
+		let cell = self.tableView.dequeueReusableCellWithIdentifier(MyCustomMenuCell.ReuseIdentifier, forIndexPath: indexPath)
 		cell.textLabel?.text = self.results[indexPath.section][indexPath.row]
 		return cell
 	}
@@ -101,7 +99,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UITableViewDele
 	}
 
 	func tableView(tableView: UITableView, canPerformAction action: Selector, forRowAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-		return action == #selector(NSObject.copy(_:))
+		return action == MenuAction.Copy.selector() || action == MenuAction.Custom.selector()
 	}
 
 	func tableView(tableView: UITableView, performAction action: Selector, forRowAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
