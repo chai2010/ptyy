@@ -20,6 +20,12 @@ import (
 	"github.com/chai2010/ptyy"
 )
 
+// 数据版本号
+//export YjyyGetDataVersion
+func YjyyGetDataVersion() *C.char {
+	return C.CString(ptyy.DataVersion)
+}
+
 //export YjyySearch
 func YjyySearch(query *C.char, limits C.int32_t) *C.char {
 	var buf bytes.Buffer

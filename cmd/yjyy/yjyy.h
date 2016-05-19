@@ -11,6 +11,7 @@
 extern "C" {
 #endif
 
+extern char* YjyyGetDataVersion();
 extern char* YjyySearch(char* query, int32_t limits);
 
 #ifdef __cplusplus
