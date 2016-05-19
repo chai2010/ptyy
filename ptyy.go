@@ -51,6 +51,11 @@ func Search(query string, limits int) []HospitalInfo {
 		return nil
 	}
 
+	// 如果是纯数字, 单独处理
+	if sNum, sNumZh, ok := adjustDigitString(query); ok {
+		return searchByDigitString(sNum, sNumZh, limits)
+	}
+
 	// 根据关键字查询
 	if results := searchByKeywords(query, limits); len(results) > 0 {
 		return results
@@ -159,6 +164,49 @@ func searchByKeywords(key string, limits int) (results []HospitalInfo) {
 			}
 		}
 		if strings.Contains(_NamePinyinLongMap[v.City], key) || strings.Contains(_NamePinyinShortMap[v.City], key) {
+			if _, ok := result0Map[v.Name]; !ok {
+				result1Map[v.Name] = v
+			}
+		}
+	}
+
+	var result0List []HospitalInfo
+	var result1List []HospitalInfo
+
+	for _, v := range result0Map {
+		result0List = append(result0List, v)
+	}
+	for _, v := range result1Map {
+		result1List = append(result1List, v)
+	}
+
+	sort.Sort(byHospitalInfo(result0List))
+	sort.Sort(byHospitalInfo(result1List))
+
+	results = append(results, result0List...)
+	results = append(results, result1List...)
+
+	return
+}
+
+// 数字查询
+func searchByDigitString(sNum, sNumZh string, limits int) (results []HospitalInfo) {
+	result0Map := make(map[string]HospitalInfo)
+	result1Map := make(map[string]HospitalInfo)
+
+	for _, v := range All {
+		if limits > 0 && len(result0Map)+len(result1Map) >= limits {
+			break
+		}
+		if strings.HasPrefix(v.Name, sNum) || strings.HasPrefix(v.Name, sNumZh) {
+			result0Map[v.Name] = v
+		}
+	}
+	for _, v := range All {
+		if limits > 0 && len(result0Map)+len(result1Map) >= limits {
+			break
+		}
+		if strings.Contains(v.Name, sNum) || strings.Contains(v.Name, sNumZh) {
 			if _, ok := result0Map[v.Name]; !ok {
 				result1Map[v.Name] = v
 			}
