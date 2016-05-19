@@ -36,6 +36,7 @@ type _HospitalInfo struct {
 	Tel       []string `json:"电话"`
 	Comment   []string `json:"注释"`
 	Feedback  []string `json:"用户反馈"`
+	Ignore    bool     `json:"ignore"`
 }
 
 // 读取Json文件
@@ -66,6 +67,10 @@ func readJsonFrom(r io.Reader) (HospitalDB, error) {
 			continue
 		}
 		for name, info := range hospitals {
+			if info.Ignore {
+				continue
+			}
+
 			v, _ := db[name]
 			v.Name = name
 			if !isNotCity(keyword) {
@@ -105,8 +110,12 @@ var g_notCityList = []string{
 	"林氏家族",
 	"黄氏家族",
 	"陈氏家族",
+	"詹氏家族",
 	"妇科/产科",
 	"三甲医院外包科室名单如下",
 	"整形科",
 	"不孕症",
+	"综合医院",
+	"专科",
+	"男科",
 }
