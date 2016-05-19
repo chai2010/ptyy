@@ -20,6 +20,9 @@ import (
 	"sort"
 	"strings"
 	"unicode/utf8"
+
+	hospital_parser "github.com/chai2010/ptyy/internal/hospital"
+	"github.com/chai2010/ptyy/internal/static"
 )
 
 func main() {
@@ -55,6 +58,7 @@ func genListFile(filename string, infoList []HospitalInfo) {
 package ptyy
 `[1:])
 
+	fmt.Fprintf(&buf, "// 共 %d 个记录\n", len(infoList))
 	fmt.Fprintln(&buf, `var _AllHospitalInfoList = []HospitalInfo{`)
 	for _, info := range infoList {
 		fmt.Fprintf(&buf, "{Name: %q, City: %q},\n", info.Name, info.City)
@@ -182,72 +186,18 @@ func parsePinyinFile() map[rune][]string {
 
 // 读取列表文件
 func parseInfoList() (infoList []HospitalInfo) {
-	data, err := ioutil.ReadFile("./internal/static/list.txt")
+	r := strings.NewReader(static.Files["hospital_list.20160508.json"])
+	db, err := hospital_parser.ReadJsonFrom(r)
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	// 分析行信息
-	var (
-		lines           = strings.Split(string(data), "\n")
-		allInfoMap      = make(map[string]*HospitalInfo)
-		curInfo         HospitalInfo
-		curInfo_hasElem = false
-	)
-
-	for i := 0; i < len(lines); i++ {
-		curLine := strings.TrimSpace(lines[i])
-
-		// 跳过忽略的行
-		if isIngoreLine(curLine) {
-			continue
-		}
-
-		// 城市名/公司名/注释
-		if curLine[0] == '#' {
-			if curInfo_hasElem {
-				curInfo = HospitalInfo{}
-				curInfo_hasElem = false
-			}
-
-			s := strings.TrimLeft(curLine, "# \t")
-			switch {
-			case isCityName(s):
-				curInfo.City = s
-			case isCompanyName(s):
-				curInfo.Owner = append(curInfo.Owner, s)
-			default:
-				curInfo.Comment = append(curInfo.Comment, s)
-			}
-		}
-
-		// 是否为医院名
-		if curLine[0] == '-' {
-			curInfo_hasElem = true
-
-			s := strings.TrimLeft(curLine, "- \t")
-			if isHospitalName(s) {
-				curInfo.Name = s
-			}
-		}
-
-		// 打印信息
-		if curInfo.Name != "" {
-			pInfo := allInfoMap[curInfo.Name]
-			if pInfo == nil {
-				info := curInfo
-				allInfoMap[curInfo.Name] = &info
-				pInfo = &info
-			}
-			pInfo.Owner = append(pInfo.Owner, curInfo.Owner...)
-			pInfo.Comment = append(pInfo.Comment, curInfo.Comment...)
-		}
+	for _, info := range db {
+		infoList = append(infoList, HospitalInfo{
+			Name: info.Name,
+			City: info.City,
+		})
 	}
-
 	// 输出
-	for _, pInfo := range allInfoMap {
-		infoList = append(infoList, *pInfo)
-	}
 	sort.Sort(byHospitalInfo(infoList))
 	return
 }
@@ -317,6 +267,9 @@ var g_pinyinPatch = map[rune]string{
 	'都': "du1",
 	'厦': "xia4",
 	'结': "jie2",
+	'脊': "ji2",
+	'伯': "bo2",
+	'似': "si4",
 }
 
 // 忽略行的关键字
