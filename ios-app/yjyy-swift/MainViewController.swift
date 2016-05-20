@@ -46,6 +46,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UITableViewDele
 
 	// 关于按钮
 	@IBAction func onAbout(sender: UIBarButtonItem) {
+		let title = "关于 野鸡医院"
 		let message = "" +
 		"用于查询中国大陆较常见的非公有或私人承包的野鸡医院或科室(以莆田系为主)，支持 拼音/汉字/数字/正则 查询。\n" +
 		"\n" +
@@ -54,12 +55,17 @@ class MainViewController: UIViewController, UISearchBarDelegate, UITableViewDele
 		"http://github.com/chai2010/ptyy\n" +
 		"版权 2016"
 
-		UIAlertView(
-			title: "关于 野鸡医院",
-			message: message,
-			delegate: nil,
-			cancelButtonTitle: "确定"
-		).show()
+		if #available(iOS 8.0, *) {
+			let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+			let okAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.Default) { (result : UIAlertAction) -> Void in
+				// OK
+			}
+			alertController.addAction(okAction)
+			self.presentViewController(alertController, animated: true, completion: nil)
+		} else {
+			let alert = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "确定")
+			alert.show()
+		}
 	}
 
 	// -------------------------------------------------------
