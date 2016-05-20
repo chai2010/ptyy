@@ -82,6 +82,10 @@ class LRUCache<K:Hashable, V>: CustomStringConvertible {
         self.queue = LRULinkedList()
         self.hashtable = [K: LRUNode<K, V>](minimumCapacity: self.capacity)
     }
+	
+	func Map() -> [K: LRUNode<K, V>] {
+		return self.hashtable
+	}
 
     subscript (key: K) -> V? {
         get {
