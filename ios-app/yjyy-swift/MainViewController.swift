@@ -99,7 +99,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UITableViewDele
 	}
 
 	func tableView(tableView: UITableView, canPerformAction action: Selector, forRowAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-		return action == MenuAction.Copy.selector() || action == MenuAction.Custom.selector()
+		return action == MenuAction.Copy.selector() || MenuAction.supportedAction(action)
 	}
 
 	func tableView(tableView: UITableView, performAction action: Selector, forRowAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {

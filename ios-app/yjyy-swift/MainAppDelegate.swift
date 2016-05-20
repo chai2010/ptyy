@@ -7,7 +7,13 @@ import UIKit
 
 enum MenuAction:String{
 	case Copy = "copy:"
-	case Custom = "mySearchAction:"
+	case MyCustomSearch = "mySearchAction:"
+	case MyCustomNavigate = "myNavigateAction:"
+
+	static func supportedAction(action: Selector) -> Bool {
+		return action == MenuAction.MyCustomSearch.selector() || action == MenuAction.MyCustomNavigate.selector()
+	}
+
 
 	// We need this awkward little conversion because «enum»'s can only have literals as raw value types.
 	// And «Selector»s aren't literal.
@@ -19,6 +25,7 @@ enum MenuAction:String{
 class MyCustomMenuCell : UITableViewCell{
 	static let ReuseIdentifier = "MyCustomMenuCell"
 
+	// Bing搜索
 	func mySearchAction(sender:AnyObject?) {
 		if self.textLabel!.text == nil {
 			return
@@ -28,6 +35,27 @@ class MyCustomMenuCell : UITableViewCell{
 		let bingUrl = NSURL(string: urlStr.stringByAddingPercentEncodingWithAllowedCharacters(
 			NSCharacterSet.URLQueryAllowedCharacterSet())!)
 
+		if let url = bingUrl {
+			if UIApplication.sharedApplication().canOpenURL(url) {
+				UIApplication.sharedApplication().openURL(url)
+			} else {
+				print("can't open url: \(url)")
+			}
+		} else {
+			print("cant open url: \(bingUrl)")
+		}
+	}
+	
+	// 地图导航
+	func myNavigateAction(sender:AnyObject?) {
+		if self.textLabel!.text == nil {
+			return
+		}
+		
+		let urlStr = "http://maps.apple.com/?q=\(self.textLabel!.text!)"
+		let bingUrl = NSURL(string: urlStr.stringByAddingPercentEncodingWithAllowedCharacters(
+			NSCharacterSet.URLQueryAllowedCharacterSet())!)
+		
 		if let url = bingUrl {
 			if UIApplication.sharedApplication().canOpenURL(url) {
 				UIApplication.sharedApplication().openURL(url)
@@ -63,11 +91,14 @@ class MainAppDelegate: UIResponder, UIApplicationDelegate {
 
  	private func addCustomMenuItems() {
 		// 添加自定义的搜索按钮
-		let newMenuItem = UIMenuItem(title: "搜索", action: MenuAction.Custom.selector())
+		let mySearchItem = UIMenuItem(title: "搜索", action: MenuAction.MyCustomSearch.selector())
+		let myNavigateItem = UIMenuItem(title: "地图", action: MenuAction.MyCustomNavigate.selector())
 
 		let menuController = UIMenuController.sharedMenuController()
 		var newItems = menuController.menuItems ?? [UIMenuItem]()
-		newItems.append(newMenuItem)
+		
+		newItems.append(mySearchItem)
+		newItems.append(myNavigateItem)
 
 		menuController.menuItems = newItems
 	}
