@@ -56,15 +56,24 @@ class MainViewController: UIViewController, UISearchBarDelegate, UITableViewDele
 		"\n" +
 		"查询数据来源于互联网, 本应用并不保证数据的真实性和准确性，查询结果只作为就医前的一个参考。\n" +
 		"\n" +
-		"http://github.com/chai2010/ptyy\n" +
-		"版权 2016"
+		"版权 2016 @chaishushan"
 
 		if #available(iOS 8.0, *) {
 			let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-			let okAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.Default) { (result : UIAlertAction) -> Void in
+			
+			let githubAction = UIAlertAction(title: "Github", style: UIAlertActionStyle.Default) { (result : UIAlertAction) -> Void in
+				let urlStr = "https://github.com/chai2010/ptyy"
+				let githubUrl = NSURL(string: urlStr.stringByAddingPercentEncodingWithAllowedCharacters(
+					NSCharacterSet.URLQueryAllowedCharacterSet())!)
+				UIApplication.sharedApplication().openURL(githubUrl!)
+			}
+			let okAction = UIAlertAction(title: "退出", style: UIAlertActionStyle.Default) { (result : UIAlertAction) -> Void in
 				// OK
 			}
+
+			alertController.addAction(githubAction)
 			alertController.addAction(okAction)
+
 			self.presentViewController(alertController, animated: true, completion: nil)
 		} else {
 			let alert = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "确定")
