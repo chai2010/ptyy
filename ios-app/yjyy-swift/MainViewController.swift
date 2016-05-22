@@ -67,12 +67,12 @@ class MainViewController: UIViewController, UISearchBarDelegate, UITableViewDele
 					NSCharacterSet.URLQueryAllowedCharacterSet())!)
 				UIApplication.sharedApplication().openURL(githubUrl!)
 			}
-			let okAction = UIAlertAction(title: "退出", style: UIAlertActionStyle.Default) { (result : UIAlertAction) -> Void in
+			let cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.Default) { (result : UIAlertAction) -> Void in
 				// OK
 			}
 
 			alertController.addAction(githubAction)
-			alertController.addAction(okAction)
+			alertController.addAction(cancelAction)
 
 			self.presentViewController(alertController, animated: true, completion: nil)
 		} else {
