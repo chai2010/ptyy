@@ -30,9 +30,9 @@
                     <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                     <items>
                         <navigationItem title="野鸡医院查询" id="diN-Z8-aou">
-                            <barButtonItem key="leftBarButtonItem" title="复位" id="8k7-pi-uZK">
+                            <barButtonItem key="leftBarButtonItem" title="分享" id="8k7-pi-uZK">
                                 <connections>
-                                    <action selector="onDefaultList:" destination="-1" id="nfd-VA-UtB"/>
+                                    <action selector="onShareApp:" destination="-1" id="uDe-Wd-EqB"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem key="rightBarButtonItem" title="关于" id="yc1-35-E5Y">

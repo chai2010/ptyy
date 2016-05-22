@@ -37,11 +37,15 @@ class MainViewController: UIViewController, UISearchBarDelegate, UITableViewDele
 		self.searchBarSearchButtonClicked(searchBar)
     }
 
-	// 默认列表
-	@IBAction func onDefaultList(sender: UIBarButtonItem) {
-		self.searchBarCancelButtonClicked(self.searchBar)
-		let top = NSIndexPath(forRow: 0, inSection: 0)
-		self.tableView.scrollToRowAtIndexPath(top, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+	// 分享App
+	@IBAction func onShareApp(sender: UIBarButtonItem) {
+		let utlTilte = "野鸡医院 - 莆田系医院查询"
+		let urlStr = "https://appsto.re/cn/QH8ocb.i"
+		let appStoreUrl = NSURL(string: urlStr.stringByAddingPercentEncodingWithAllowedCharacters(
+			NSCharacterSet.URLQueryAllowedCharacterSet())!)
+
+		let activity = UIActivityViewController(activityItems: [utlTilte, appStoreUrl!], applicationActivities: nil)
+		self.presentViewController(activity, animated: true, completion: nil)
 	}
 
 	// 关于按钮
