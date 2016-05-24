@@ -35,7 +35,13 @@ end
 # 5s: 640x1136
 # 4s: 640x960
 #
+# iPad: 768x1024
+# iPadPro: 2048x2732
+#
 # 6sp/6s/5s 的长宽比例一样
+# iPad/iPadPro 的长宽比例一样
+#
+# 因为预览图是示意图, 并不需要完全一致
 #
 task :screenshots do
   Dir.chdir './misc/screenshots' do
