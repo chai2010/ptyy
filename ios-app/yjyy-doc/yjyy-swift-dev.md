@@ -2,6 +2,16 @@
 
 本文加上读者对Go语言和Swift语言都有一定了解, 但是对二者混合使用不了解的同学.
 
+本教程是基于一个真实上架的iOS应用做的简单的总结。
+
+我们先看看运行效果：
+
+![](yjyy-ios.png)
+
+扫码安装：
+
+![](yjyy-appstore.png)
+
 ## 背景
 
 Go语言是Google公司于2010年开源的一个面向网络服务和多并发环境的编程语言，特点是简单。
@@ -104,8 +114,221 @@ p.dealloc(1)
 
 ## Go语言导出C静态库
 
+Go语言提供了一个cgo的工具，用于Go语言和C语言交互。这是Go语言使用C语言的一个例子:
+
+```go
+package main
+
+//#include <stdio.h>
+import "C"
+
+func main() {
+	C.puts(C.CString("abc"))
+}
+```
+
+既然要交互，自然会涉及到C语言回调Go语言函数的情形。为此，cgo提供了一个`export`注释命令，
+用于生成Go语言函数对应的C语言函数:
+
+```go
+//export MyStrDup
+func MyStrDup(s *C.char) *C.char {
+	return C.strdup(s)
+}
+```
+
+`MyStrDup`指定的名字必须和Go函数名字一致，函数的参数最后是C语言支持的类型。
+
+现在，我们就得到了用Go语言实现的`MyStrDup`函数，使用方法和前面的C语言实现的`MyStrDup`是一样的。
+
+和引用C语言函数库遇到的问题一样，我们如何在工程中引用这些C代码或Go代码实现的函数呢？
+
+答案还是来自C语言：将代码构建为C静态库或者C动态库，然后将静态库或动态库导入Swift工程。
+
+但是，对于iOS来说，构建C静态库或者C动态库的过程要麻烦（使用xcode也只是隐藏了构建的具体步骤）。
+
+因为，iOS涉及到多种CPU架构：模拟器的x86、4s的32位arm、5s以后的64位arm，64位arm中还有不同当版本...
+
+这是C静态库或者C动态库构建始终都要面对的问题。
+
 ## 交叉构建的参数
+
+Go1.6之后增加了构建C静态库的支持，交叉编译也非常简单，只需要设置好`GOARCH`和`GOOS`就行。
+
+因为，iOS的`GOOS`只有`Darwin`一种类型，我们只需要设置`GOARCH`就可以了。
+
+要构建C静态库，我们需要将上面的`MyStrDup`实现放到一个`main`包中:
+
+```go
+package main
+
+//#include <string.h>
+import "C"
+
+func main() {
+	//
+}
+
+//export MyStrDup
+func MyStrDup(s *C.char) *C.char {
+	return C.strdup(s)
+}
+```
+
+`main`包中的`main`函数不会被执行，但是`init`函数依然有效。
+
+使用下面的命令就可以构建当前系统的c静态库：
+
+	go build -buildmode=c-archive
+
+要交叉编译iOS可用的c静态库，我们需要先设置`GOARCH`，同时打开cgo特性（交叉编译时，cgo默认是关闭的）。
+
+下面是构建针对模拟器的x86/amd64类型的C静态库：
+
+```
+export CGO_ENABLED=1
+export GOARCH=amd64
+
+go build -buildmode=c-archive -o libmystrdup_amd64.a
+```
+
+
+我们使用`-o`参数指定了输出的静态库文件名。构建命令同时还会生成一个头文件（可能叫`libmystrdup_386.h`），
+我们没有用到这个头文件，直接删除掉就可以。
+
+下面是构建针对模拟器的x86/386类型的C静态库：
+
+```
+export CGO_ENABLED=1
+export GOARCH=386
+
+go build -buildmode=c-archive -o libmystrdup_386.a
+```
+
+在构建x86/386类型的C静态库时可能会有一些link错误，我们暂时先用以下方法回避。
+
+创建一个`patch_386.go`文件：
+
+```go
+// Copyright 2016 <chaishushan{AT}gmail.com>. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
+// 针对iOS模拟器link时缺少的函数
+// 属于临时解决方案
+
+package main
+
+/*
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <time.h>
+
+size_t fwrite$UNIX2003(const void* a, size_t b, size_t c, FILE* d) {
+    return fwrite(a, b, c, d);
+}
+
+char* strerror$UNIX2003(int errnum) {
+    return strerror(errnum);
+}
+
+time_t mktime$UNIX2003(struct tm * a) {
+    return mktime(a);
+}
+double strtod$UNIX2003(const char * a, char ** b) {
+    return strtod(a, b);
+}
+
+int setenv$UNIX2003(const char* envname, const char* envval, int overwrite) {
+    return setenv(envname, envval, overwrite);
+}
+int unsetenv$UNIX2003(const char* name) {
+    return unsetenv(name);
+}
+
+*/
+import "C"
+```
+
+当然，还是会有一些警告出现，暂时忽略它们。
+
+## 构建多cpu类型的静态库
+
+然后，将C静态库加入到ios的xcode工程文件就可以了。
+
+x86构建是比较简单的，因为我们可以默认使用本地的构建命令。
+但是，如果要构建arm的静态库，则需要先配置好构建环境。
+
+我从Go代码中扣出了一个`clangwrap.sh`脚本（好像是在`$GOROOT/misci/ios`目录）:
+
+```
+#!/bin/sh
+# This uses the latest available iOS SDK, which is recommended.
+# To select a specific SDK, run 'xcodebuild -showsdks'
+# to see the available SDKs and replace iphoneos with one of them.
+SDK=iphoneos
+SDK_PATH=`xcrun --sdk $SDK --show-sdk-path`
+export IPHONEOS_DEPLOYMENT_TARGET=7.0
+# cmd/cgo doesn't support llvm-gcc-4.2, so we have to use clang.
+CLANG=`xcrun --sdk $SDK --find clang`
+
+if [ "$GOARCH" == "arm" ]; then
+	CLANGARCH="armv7"
+elif [ "$GOARCH" == "arm64" ]; then
+	CLANGARCH="arm64"
+else
+	echo "unknown GOARCH=$GOARCH" >&2
+	exit 1
+fi
+
+exec $CLANG -arch $CLANGARCH -isysroot $SDK_PATH "$@"
+```
+
+里面比较重要的是`IPHONEOS_DEPLOYMENT_TARGET`环境变量，这里意思是目标最低支持ios7.0系统。
+
+构建arm64环境的静态库：
+
+```
+export CGO_ENABLED=1
+export GOARCH=arm64
+export CC=$PWD/clangwrap.sh
+export CXX=$PWD/clangwrap.sh
+
+go build -buildmode=c-archive -o libmystrdup_arm64.a
+```
+
+构建armv7环境的静态库：
+
+```
+export CGO_ENABLED=1
+export GOARCH=arm
+export GOARM=7
+export CC=$PWD/clangwrap.sh
+export CXX=$PWD/clangwrap.sh
+
+go build -buildmode=c-archive -o libmystrdup_armv7.a
+```
+
+然后我们用`lipo`命令将以上这些不同的静态库打包到一个静态库中：
+
+```
+lipo libmystrdup_386.a libmystrdup_adm64.a libmystrdup_arm64.a libmystrdup_armv7.a -create -output libmystrdup.a
+```
+
+这样的话，只要引入一个静态库就可以支持不同cpu类型的目标了。
 
 ## 总结
 
-TODO
+毛主席教导我们：要在战争中学习战争。
+
+**[野鸡医院](https://appsto.re/cn/QH8ocb.i)** 这个app是作者第一个iOS应用，这篇教程也是在iOS开发过程逐步学习总结的结果。
+
+完整的例子：
+
+- AppStore安装: https://appsto.re/cn/QH8ocb.i
+- Swift工程: https://github.com/chai2010/ptyy/tree/master/ios-app/yjyy-swift
+- Go静态库工程: https://github.com/chai2010/ptyy/tree/master/cmd/yjyy
+- 静态库构建脚本: https://github.com/chai2010/ptyy/tree/master/ios-app/yjyy-swift/vendor/gopkg
+
+所有的代码均可以免费获取（BSD协议）：https://github.com/chai2010/ptyy
