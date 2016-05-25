@@ -80,11 +80,13 @@ class MainAppDelegate: UIResponder, UIApplicationDelegate {
 
 		// 创建主窗口(包含导航栏)
 		window = UIWindow(frame: UIScreen.mainScreen().bounds)
-		window!.rootViewController = MainViewController()
+		window!.rootViewController = MainViewController(nibName: "MainViewController", bundle: nil)
 		window!.makeKeyAndVisible()
 
 		// 延长启动界面显示时间
-		NSThread.sleepForTimeInterval(0.5)
+		if #available(iOS 8.0, *) {
+			NSThread.sleepForTimeInterval(0.5)
+		}
 
 		return true
 	}
