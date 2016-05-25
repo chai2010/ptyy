@@ -46,6 +46,12 @@ class MainViewController: UIViewController, UISearchBarDelegate, UITableViewDele
 
 		let activity = UIActivityViewController(activityItems: [utlTilte, appStoreUrl!], applicationActivities: nil)
 		self.presentViewController(activity, animated: true, completion: nil)
+
+		// 修复 iPad 上崩溃问题
+		if #available(iOS 8.0, *) {
+    		let presentationController = activity.popoverPresentationController
+    		presentationController?.sourceView = view
+		}
 	}
 
 	// 关于按钮
@@ -60,7 +66,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UITableViewDele
 
 		if #available(iOS 8.0, *) {
 			let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-			
+
 			let githubAction = UIAlertAction(title: "Github", style: UIAlertActionStyle.Default) { (result : UIAlertAction) -> Void in
 				let urlStr = "https://github.com/chai2010/ptyy"
 				let githubUrl = NSURL(string: urlStr.stringByAddingPercentEncodingWithAllowedCharacters(
