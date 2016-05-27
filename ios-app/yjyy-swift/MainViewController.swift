@@ -9,6 +9,8 @@ class MainViewController: UIViewController, UISearchBarDelegate, UITableViewDele
 	@IBOutlet weak var navigationBar: UINavigationBar!
 	@IBOutlet weak var searchBar: UISearchBar!
 	@IBOutlet weak var tableView: UITableView!
+	
+	var refreshControl = UIRefreshControl()
 
 	var db:DataEngin = DataEngin()
 	var results = [[String]]()
@@ -29,6 +31,9 @@ class MainViewController: UIViewController, UISearchBarDelegate, UITableViewDele
 		self.tableView.tableFooterView = footerBar
 		self.tableView.dataSource = self
 		self.tableView.delegate = self
+		
+		self.refreshControl.addTarget(self, action: #selector(MainViewController.refreshData), forControlEvents: UIControlEvents.ValueChanged)
+		self.tableView.addSubview(self.refreshControl)
 
 		// 注册TableViewCell
 		self.tableView.registerClass(MyCustomMenuCell.self, forCellReuseIdentifier: MyCustomMenuCell.ReuseIdentifier)
@@ -37,6 +42,12 @@ class MainViewController: UIViewController, UISearchBarDelegate, UITableViewDele
 		self.searchBarSearchButtonClicked(searchBar)
     }
 
+	// 刷新数据
+	func refreshData() {
+		NSThread.sleepForTimeInterval(1.0)
+		self.refreshControl.endRefreshing()
+	}
+	
 	// 分享App
 	@IBAction func onShareApp(sender: UIBarButtonItem) {
 		let utlTilte = "野鸡医院 - 莆田系医院查询"

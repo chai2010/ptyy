@@ -19,9 +19,9 @@ class DataEnginTest: XCTestCase {
 	// 查询的性能
 	func testBenchSearch() {
 		self.measureBlock {
-			var db = DataEngin()
+			let db = DataEngin()
 			let result = db.SearchV2("")
-			_ = result
+			XCTAssert(!result.isEmpty)
 		}
 	}
 
